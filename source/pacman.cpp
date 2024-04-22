@@ -60,7 +60,7 @@ void Pacman::moveup()
         anim_index = 0;
     }
     setPixmap(anim[Up][anim_index]);
-    if (SpeedBoost == true)
+    if (game->SpeedBoost == true)
     {
         setY(static_cast<int>(y()) - 2);
     }
@@ -79,7 +79,7 @@ void Pacman::moveleft()
         anim_index = 0;
     }
     setPixmap(anim[Left][anim_index]);
-    if (SpeedBoost == true)
+    if (game->SpeedBoost == true)
     {
         setX(static_cast<int>(x()) - 2);
     }
@@ -97,7 +97,7 @@ void Pacman::movedown()
         anim_index = 0;
     }
     setPixmap(anim[Down][anim_index]);
-    if (SpeedBoost == true)
+    if (game->SpeedBoost == true)
     {
         setY(static_cast<int>(y()) + 2);
     }
@@ -115,7 +115,7 @@ void Pacman::moveright()
         anim_index = 0;
     }
     setPixmap(anim[Right][anim_index]);
-    if (SpeedBoost == true)
+    if (game->SpeedBoost == true)
     {
         setX(static_cast<int>(x()) + 2);
     }
@@ -158,7 +158,8 @@ void Pacman::eat_ball(int __y, int __x)
         break;
     case PowerBall02:
         // Handling for PowerBall02
-                SpeedBoost = true;
+                game->SpeedBoost = true;
+                game->speed_boost_timer->start();
                 game->score += obj->get_score();
                 game->ball_num--;
                 // Remove the eaten PowerBall02 from the vector

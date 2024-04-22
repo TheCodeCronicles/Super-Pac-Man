@@ -149,6 +149,10 @@ void Game::start()
     connect(powerball02_flash_timer, SIGNAL(timeout()), this , SLOT(powerball02_flash()));
     powerball02_flash_timer->start(FLASH_INTERVAL);
 
+    speed_boost_timer = new QTimer(this);
+    connect(speed_boost_timer, SIGNAL(timeout()), this, SLOT(stop_speed_boost()));
+    speed_boost_timer->setInterval(SPEED_BOOST_DURATION);
+
     powerball03_flash_timer = new QTimer(this);
     connect(powerball03_flash_timer, SIGNAL(timeout()), this , SLOT(powerball03_flash()));
     powerball03_flash_timer->start(FLASH_INTERVAL);
@@ -230,6 +234,12 @@ void Game::powerball02_flash()
         }
         flash02_tick = 1;
     }
+}
+
+void Game::stop_speed_boost()
+{
+    SpeedBoost = false;
+    speed_boost_timer->stop();
 }
 
 void Game::powerball03_flash()

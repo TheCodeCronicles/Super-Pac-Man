@@ -1,4 +1,3 @@
-
 #include "game.h"
 #include "chasing_strategy.cpp"
 #include <QRandomGenerator>

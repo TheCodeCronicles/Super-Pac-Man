@@ -19,6 +19,7 @@
 #define RUNNING_INTERVAL 5          // move interval of running ghosts
 #define PANNIC_TIME     500        // interval number of pannic ghosts
 #define FLASH_INTERVAL 200          // flash interval of powerballs
+#define SPEED_BOOST_DURATION 5000 // Speed boost duration in milliseconds (adjust as needed)
 
 /* Game control class */
 class Game : public QGraphicsScene
@@ -53,17 +54,20 @@ private slots:
     void powerball02_flash();
     void powerball03_flash();
     void ghost_handler(int);
+    void stop_speed_boost();
 
 private:
     int map_height, map_width;      // game map (20 x 29 in this app)
     int map_size;                   // map_width * map_height
     int ball_num, eat_num, score;
     int geo_x, geo_y;               // geometric coordinate
+    bool SpeedBoost = false;
 
     QTimer *ghost_timer[Ghost::GhostNum];
     QTimer *pacman_timer;
     QTimer *powerball_flash_timer;
     QTimer *powerball02_flash_timer;
+    QTimer *speed_boost_timer;
     QTimer *powerball03_flash_timer;
     bool flash_tick;
     bool flash02_tick;

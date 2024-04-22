@@ -7,8 +7,6 @@
 #include <QTimer>
 #include <QVector>
 
-#define SPEED_BOOST_DURATION 5000 // Speed boost duration in milliseconds (adjust as needed)
-
 /* Predefine the game object */
 class Game;
 
@@ -39,9 +37,10 @@ public:
 protected:
     int _x, _y;                 // coordinate in map
     Dir dir;                    // current moving direction
-    Dir next_dir;               // next direction by w, a, s, d key
+    Dir next_dir;               // next direction by up, left, back, right key
     ObjectType type;
     int score;
+
 };
 
 
@@ -62,7 +61,6 @@ private:
     void moveright();
     void eat_ball(int, int);
     bool overlapable(int, int); // check if pacman can go to map[i][j]
-    bool SpeedBoost = false;
 
     QVector<QPixmap> anim[4];   // animations
     int anim_index;

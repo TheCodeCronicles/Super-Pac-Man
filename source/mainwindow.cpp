@@ -33,7 +33,7 @@ void MainWindow::initLabels()
     QLabel *title = new QLabel(this);
     title->setText("Super Pacman");
     title->setStyleSheet("QLabel {font-family: Fixedsys; color: yellow; font-size: 24px;}");
-    title->setGeometry(280, 12, 200, 26);
+    title->setGeometry((width() - title->width()) / 2, 12, 200, 26);
 
     // Score Title label
     score_title = new QLabel(this);
