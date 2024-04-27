@@ -59,6 +59,12 @@ Ghost::Ghost(int clr) : GameObject(
     panic_anim.push_back(QPixmap(":/game_objects/ghosts/bl2.png"));
     running_anim.push_back(QPixmap(":/game_objects/ghosts/run.png"));
     setPixmap(anim[Right][0]);
+
+    PanicTune = new QMediaPlayer();
+    PanicTune->setMedia(QUrl("qrc:/game_objects/Sounds/pacman_intermission.wav"));
+
+    GhostEatTune = new QMediaPlayer();
+    GhostEatTune->setMedia(QUrl("qrc:/game_objects/Sounds/pacman_eatghost.wav"));
 }
 
 
@@ -766,14 +772,15 @@ void Ghost::go_to_cage()
 void Ghost::move()
 {
     if (status != Running && release_time > 0)
-    {
+    {       
         release_time--;
     }
     else if (status == Panic)
     {
+        PanicTune->play();
         panic_time--;
         if (panic_time <= 0)
-        {
+        {            
             status = Normal;
             game->ghost_timer[color]->setInterval(NORMAL_INTERVAL);
         }
@@ -824,6 +831,7 @@ void Ghost::move()
             {
                 if (status == Running)
                 {
+                    GhostEatTune->play();
                     if (_x == game->gate->get_x() && _y == game->gate->get_y() + 1)
                     {
                         status = Normal;

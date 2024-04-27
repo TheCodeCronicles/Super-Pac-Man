@@ -64,5 +64,10 @@
         <file>game_objects/map_objects/wall.png</file>
         <file>game_objects/map_objects/power_ball_02.png</file>
         <file>game_objects/map_objects/power_ball_03.png</file>
+        <file>game_objects/Sounds/StartupTune.wav</file>
+        <file>game_objects/Sounds/pacman_chomp.wav</file>
+        <file>game_objects/Sounds/pacman_eatghost.wav</file>
+        <file>game_objects/Sounds/pacman_intermission.wav</file>
+        <file>game_objects/Sounds/pacman_death.wav</file>
     </qresource>
 </RCC>

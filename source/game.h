@@ -8,6 +8,7 @@
 #include <QPair>
 #include <iostream>
 #include "gameobject.h"
+#include <QMediaPlayer>
 
 using namespace std;
 
@@ -80,6 +81,8 @@ private:
     bool flash_tick;
     bool flash02_tick;
     bool flash03_tick;
+    QMediaPlayer *StartupTune;
+    QMediaPlayer *DeathTune;
 
 };
 

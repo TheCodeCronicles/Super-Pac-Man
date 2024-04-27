@@ -40,6 +40,15 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
     QFile mapfile(map_src);
     mapfile.open(QIODevice::ReadOnly|QIODevice::Text);
 
+    // PLAY STARTING TUNE
+    StartupTune = new QMediaPlayer();
+    StartupTune->setMedia(QUrl("qrc:/game_objects/Sounds/StartupTune.wav"));
+    StartupTune->play();
+
+    // PLAY STARTING TUNE
+    DeathTune = new QMediaPlayer();
+    DeathTune->setMedia(QUrl("qrc:/game_objects/Sounds/pacman_death.wav"));
+
     // Create a new instance of Pacman
     pacman = new Pacman();
 
@@ -171,12 +180,14 @@ void Game::start()
         ghost_retreat_timer[i] = new QTimer(this);
         connect(ghost_retreat_timer[i], &QTimer::timeout, [=](){ghost_retreat_handler(i);});
         ghost_retreat_timer[i]->setInterval(MAX_GHOST_RETREAT_TIME);
-    }
+    }   
 }
 
 
 void Game::stop()
-{
+{    
+    DeathTune->play();
+
     pacman_timer->stop();
     powerball_flash_timer->stop();
     powerball02_flash_timer->stop();

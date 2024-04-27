@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QTimer>
 #include <QVector>
+#include <QMediaPlayer>
 
 /* Predefine the game object */
 class Game;
@@ -55,6 +56,7 @@ public:
     friend class Game;
 
 private:
+    QMediaPlayer* eatSound;
     void moveup();
     void movedown();
     void moveleft();
@@ -84,6 +86,8 @@ public:
     friend class Pacman;
 
 private:
+    QMediaPlayer* PanicTune;
+    QMediaPlayer* GhostEatTune;
     void moveup();
     void movedown();
     void moveleft();

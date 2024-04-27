@@ -1,4 +1,5 @@
 #include "game.h"
+#include <QMediaPlayer>
 #define W (GameObject::Width)
 
 Pacman::Pacman() : GameObject(
@@ -50,6 +51,9 @@ Pacman::Pacman() : GameObject(
     anim[Down].push_back(QPixmap(":/game_objects/pacman/d4.png"));
     anim[Down].push_back(QPixmap(":/game_objects/pacman/d3.png"));
     anim[Down].push_back(QPixmap(":/game_objects/pacman/d2.png"));
+
+    eatSound = new QMediaPlayer();
+    eatSound->setMedia(QUrl("qrc:/game_objects/Sounds/pacman_chomp.wav"));
 }
 
 void Pacman::moveup()
@@ -132,10 +136,14 @@ void Pacman::eat_ball(int __y, int __x)
     switch (obj->get_type())
     {
     case Ball:
+        eatSound->setPosition(0);
+        eatSound->play();
         game->score += obj->get_score();
-        game->ball_num--;
+        game->ball_num--;       
         break;
     case PowerBall:
+        eatSound->setPosition(0);
+        eatSound->play();
         game->score += obj->get_score();
         game->ball_num--;
         for (int i = 0; i < game->powerball.size(); i++)
@@ -158,6 +166,8 @@ void Pacman::eat_ball(int __y, int __x)
         break;
     case PowerBall02:
         // Handling for PowerBall02
+        eatSound->setPosition(0);
+        eatSound->play();
                 game->SpeedBoost = true;
                 game->speed_boost_timer->start();
                 game->score += obj->get_score();
@@ -171,11 +181,11 @@ void Pacman::eat_ball(int __y, int __x)
                         break;
                     }
                 }
-                // Apply speed boost to Pacman
-
 
         break;
     case PowerBall03:
+        eatSound->setPosition(0);
+        eatSound->play();
         game->score += obj->get_score();
         game->ball_num--;
         for (int i = 0; i < game->powerball03.size(); i++)
