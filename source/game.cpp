@@ -294,7 +294,7 @@ void Game::ghost_handler(int ghost_id)
 
 void Game::ghost_retreat_handler(int ghost_id)
 {
-    retreat = false;
+    retreat[ghost_id] = false;
     cout << "Ghost " << ghost_id << " respawned at gate due to being stuck in a loop"<< endl;
     ghost[ghost_id]->move();
     ghost_retreat_timer[ghost_id]->stop();

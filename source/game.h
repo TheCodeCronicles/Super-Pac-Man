@@ -67,8 +67,8 @@ private:
     int ball_num, eat_num, score;
     int geo_x, geo_y;               // geometric coordinate
     bool SpeedBoost = false;
-    bool retreat = true;
-    bool retreat_timer_running = false;
+    bool retreat[Ghost::GhostNum] = {true, true, true, true};
+    bool retreat_timer_running[Ghost::GhostNum] = {false, false, false, false};
 
     QTimer *ghost_timer[Ghost::GhostNum];
     QTimer *ghost_retreat_timer[Ghost::GhostNum];
