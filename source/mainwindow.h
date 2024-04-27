@@ -5,6 +5,8 @@
 #include <QLabel>
 #include <QKeyEvent>
 #include <QTimer>
+#include <QPushButton>
+#include <QProcess>
 #include "game.h"
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +25,7 @@ public:
 
 private slots:
     void update_score();
+    void restart_game();
 
 private:
     Ui::MainWindow *ui;
@@ -31,5 +34,7 @@ private:
     QTimer *score_timer;
     QLabel *kill_mode;
     Game *game;
+
+    QPushButton *restart;
 };
 #endif // MAINWINDOW_H

@@ -13,6 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setBackgroundBrush(Qt::black);
     ui->graphicsView->setFocusPolicy(Qt::NoFocus);
 
+    restart = new QPushButton("Restart Game", this);
+    restart->move((width()-restart->width())/2 - 4, (height() - 40));
+    connect(restart, &QPushButton::clicked, this, &MainWindow::restart_game);
+    restart->hide();
+
     int map_height = 20, map_width = 57;            // 20x57 game map
     int x = 50, y = 50;                             // x y in mainwindow
     int w = (map_width * GameObject::Width);
@@ -57,8 +62,8 @@ void MainWindow::initLabels()
     lose_label = new QLabel(this);
     lose_label->hide();
     lose_label->setText("You lose!");
-    lose_label->setStyleSheet("QLabel {font-family: Fixedsys;color: red;font-size: 16px;}");
-    lose_label->setGeometry((width() - lose_label->width()) / 2, height() - 40, lose_label->width(), lose_label->height());
+    lose_label->setStyleSheet("QLabel {font-family: Fixedsys;color: red;font-size: 40px;}");
+    lose_label->setGeometry((width() - lose_label->width()) / 2, height() - 75, lose_label->width(), lose_label->height());
 
     kill_mode = new QLabel(this);
     kill_mode->hide();
@@ -85,6 +90,7 @@ void MainWindow::update_score()
     {
         lose_label->show();
         score_timer->stop();
+        restart->show();
     }
 }
 
@@ -106,6 +112,12 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         game->pacman_next_direction(GameObject::Right);
         break;
     }
+}
+
+void MainWindow::restart_game()
+{
+    qApp->quit();
+    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
 
 
