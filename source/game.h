@@ -6,7 +6,10 @@
 #include <QGraphicsItem>
 #include <QTimer>
 #include <QPair>
+#include <iostream>
 #include "gameobject.h"
+
+using namespace std;
 
 
 /* Changeable game options */
@@ -20,6 +23,7 @@
 #define PANNIC_TIME     500        // interval number of pannic ghosts
 #define FLASH_INTERVAL 200          // flash interval of powerballs
 #define SPEED_BOOST_DURATION 5000 // Speed boost duration in milliseconds (adjust as needed)
+#define MAX_GHOST_RETREAT_TIME 10000 // Maximum time a ghost is allowed to retreat to cage (To avoid ghosts getting stuck)
 
 /* Game control class */
 class Game : public QGraphicsScene
@@ -50,6 +54,7 @@ public:
 
 private slots:
     void pacman_handler();
+    void ghost_retreat_handler(int);
     void powerball_flash();
     void powerball02_flash();
     void powerball03_flash();
@@ -62,8 +67,11 @@ private:
     int ball_num, eat_num, score;
     int geo_x, geo_y;               // geometric coordinate
     bool SpeedBoost = false;
+    bool retreat = true;
+    bool retreat_timer_running = false;
 
     QTimer *ghost_timer[Ghost::GhostNum];
+    QTimer *ghost_retreat_timer[Ghost::GhostNum];
     QTimer *pacman_timer;
     QTimer *powerball_flash_timer;
     QTimer *powerball02_flash_timer;

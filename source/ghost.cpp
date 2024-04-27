@@ -759,6 +759,7 @@ void Ghost::go_to_cage()
             }
         }
     }
+
 }
 
 
@@ -827,11 +828,36 @@ void Ghost::move()
                     {
                         status = Normal;
                         game->ghost_timer[color]->setInterval(NORMAL_INTERVAL);
+                        game->retreat = true;
+                        game->ghost_retreat_timer[color]->stop();
+                        cout << "Retreat Timer Stopped for Ghost " << color << endl;
+                        game->retreat_timer_running = false;
                     }
                     else
                     {
                         /* Go back to cage. */
                         go_to_cage();
+
+                        // Check wheter ghost does not retreat but gets stuck in a loop
+                        if (game->retreat_timer_running == false)
+                        {
+                            game->ghost_retreat_timer[color]->start();
+                            cout << "Retreat Timer Started for Ghost " << color << endl;
+                            game->retreat_timer_running = true;
+                        }
+
+                        if (game->retreat == false)
+                        {
+                            dir = Down;
+                            setX(game->gate->x());
+                            setY(game->gate->y());
+                            status = Normal;
+                            game->ghost_timer[color]->setInterval(NORMAL_INTERVAL);
+                            game->retreat = true;
+                            game->ghost_retreat_timer[color]->stop();
+                            cout << "Retreat Timer Stopped for Ghost " << color << endl;
+                            game->retreat_timer_running = false;
+                        }
                     }
                 }
                 else

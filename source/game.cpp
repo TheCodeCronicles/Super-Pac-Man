@@ -167,6 +167,10 @@ void Game::start()
         // Managed to pass ghost id to ghost_handler.
         connect(ghost_timer[i], &QTimer::timeout, [=](){ghost_handler(i);} );
         ghost_timer[i]->start(NORMAL_INTERVAL);
+
+        ghost_retreat_timer[i] = new QTimer(this);
+        connect(ghost_retreat_timer[i], &QTimer::timeout, [=](){ghost_retreat_handler(i);});
+        ghost_retreat_timer[i]->setInterval(MAX_GHOST_RETREAT_TIME);
     }
 }
 
@@ -177,6 +181,7 @@ void Game::stop()
     powerball_flash_timer->stop();
     powerball02_flash_timer->stop();
     powerball03_flash_timer->stop();
+
     for (int i = 0; i < Ghost::GhostNum; i++)
     {
         ghost_timer[i]->stop();
@@ -287,6 +292,14 @@ void Game::ghost_handler(int ghost_id)
     }
 }
 
+void Game::ghost_retreat_handler(int ghost_id)
+{
+    retreat = false;
+    cout << "Ghost " << ghost_id << " respawned at gate due to being stuck in a loop"<< endl;
+    ghost[ghost_id]->move();
+    ghost_retreat_timer[ghost_id]->stop();
+}
+
 
 void Game::pacman_next_direction(GameObject::Dir d)
 {
@@ -317,5 +330,6 @@ Game::~Game()
     for (int i = 0; i < Ghost::GhostNum; i++)
     {
         delete ghost_timer[i];
+        delete ghost_retreat_timer[i];
     }
 }
