@@ -23,6 +23,7 @@ using namespace std;
 #define RUNNING_INTERVAL 5          // move interval of running ghosts
 #define PANNIC_TIME     500        // interval number of pannic ghosts
 #define FLASH_INTERVAL 200          // flash interval of powerballs
+#define RESTART_FLASH_INTERVAL 600  // flash interval for restart button
 #define SPEED_BOOST_DURATION 5000 // Speed boost duration in milliseconds (adjust as needed)
 #define MAX_GHOST_RETREAT_TIME 10000 // Maximum time a ghost is allowed to retreat to cage (To avoid ghosts getting stuck)
 

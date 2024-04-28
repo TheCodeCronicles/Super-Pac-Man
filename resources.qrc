@@ -69,5 +69,10 @@
         <file>game_objects/Sounds/pacman_eatghost.wav</file>
         <file>game_objects/Sounds/pacman_intermission.wav</file>
         <file>game_objects/Sounds/pacman_death.wav</file>
+        <file>game_objects/map_objects/GameLogo.png</file>
+        <file>game_objects/map_objects/restart.png</file>
+        <file>game_objects/map_objects/GameOver.png</file>
+        <file>game_objects/map_objects/Win.png</file>
+        <file>game_objects/map_objects/restart_inverted.png</file>
     </qresource>
 </RCC>

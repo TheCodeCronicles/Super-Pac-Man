@@ -13,13 +13,24 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setBackgroundBrush(Qt::black);
     ui->graphicsView->setFocusPolicy(Qt::NoFocus);
 
-    restart = new QPushButton("Restart Game", this);
-    restart->move((width()-restart->width())/2 - 4, (height() - 40));
+    restart = new QPushButton(this);
+    restart_icon = QPixmap(":/game_objects/map_objects/restart.png");
+    restart_icon_inverted = QPixmap(":/game_objects/map_objects/restart_inverted.png");
+    restart->setIcon(QIcon(restart_icon));
+    restart->setFixedSize(restart->size()*2);
+    restart->setIconSize(restart->size());
+    restart->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
+    restart->move((width()-restart->width())/2 - 4, (height() - 60));
     connect(restart, &QPushButton::clicked, this, &MainWindow::restart_game);
     restart->hide();
 
+    flash_timer = new QTimer(this);
+    connect(flash_timer, SIGNAL(timeout()), this, SLOT(flash_button()));
+    flash_timer->setInterval(RESTART_FLASH_INTERVAL);
+
+
     int map_height = 20, map_width = 57;            // 20x57 game map
-    int x = 50, y = 50;                             // x y in mainwindow
+    int x = 50, y = 130;                             // x y in mainwindow
     int w = (map_width * GameObject::Width);
     int h = (map_height * GameObject::Width);
 
@@ -36,9 +47,13 @@ void MainWindow::initLabels()
 {
     // Title label
     QLabel *title = new QLabel(this);
-    title->setText("Super Pacman");
-    title->setStyleSheet("QLabel {font-family: Fixedsys; color: yellow; font-size: 24px;}");
-    title->setGeometry((width() - title->width()) / 2, 12, 200, 26);
+    QImage game_title;
+    game_title.load(":/game_objects/map_objects/GameLogo.png");
+    QPixmap title_pixmap = QPixmap::fromImage(game_title);
+    title->setPixmap(title_pixmap);
+    title->setScaledContents(true);
+    title->setGeometry((width() - title_pixmap.width()/4)/2, 12, title_pixmap.width()/4, title_pixmap.height()/4);
+    title->show();
 
     // Score Title label
     score_title = new QLabel(this);
@@ -54,16 +69,23 @@ void MainWindow::initLabels()
     score->setGeometry(110, 12, 150, 26);
 
     win_label = new QLabel(this);
+    QImage game_win;
+    game_win.load(":/game_objects/map_objects/Win.png");
+    QPixmap win_pixmap = QPixmap::fromImage(game_win);
+    win_label->setPixmap(win_pixmap);
+    win_label->setScaledContents(true);
+    win_label->setGeometry((width() - win_label->width()) / 2, height() - 75, win_label->width(), win_label->height());
     win_label->hide();
-    win_label->setText("You win!");
-    win_label->setStyleSheet("QLabel {font-family: Fixedsys;color: yellow;font-size: 16px;}");
-    win_label->setGeometry((width() - win_label->width()) / 2, height() - 40, win_label->width(), win_label->height());
 
     lose_label = new QLabel(this);
+    QImage game_over;
+    game_over.load(":/game_objects/map_objects/GameOver.png");
+    QPixmap lose_pixmap = QPixmap::fromImage(game_over);
+    lose_label->setPixmap(lose_pixmap);
+    lose_label->setScaledContents(true);
+    lose_label->setGeometry((width() - lose_label->width()*1.35) / 2, height() - 75, lose_label->width()*1.2, lose_label->height()*1.2);
     lose_label->hide();
-    lose_label->setText("You lose!");
-    lose_label->setStyleSheet("QLabel {font-family: Fixedsys;color: red;font-size: 40px;}");
-    lose_label->setGeometry((width() - lose_label->width()) / 2, height() - 75, lose_label->width(), lose_label->height());
+
 
     kill_mode = new QLabel(this);
     kill_mode->hide();
@@ -85,12 +107,15 @@ void MainWindow::update_score()
     {
         win_label->show();
         score_timer->stop();
+        restart->show();
+        flash_timer->start();
     }
     else if (game->stat == Game::Lose)
     {
         lose_label->show();
         score_timer->stop();
         restart->show();
+        flash_timer->start();
     }
 }
 
@@ -118,6 +143,22 @@ void MainWindow::restart_game()
 {
     qApp->quit();
     QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+}
+
+void MainWindow::flash_button()
+{
+    if (is_inverted == false)
+    {
+        restart->setIcon(QIcon(restart_icon_inverted));
+        is_inverted = true;
+        flash_timer->setInterval(RESTART_FLASH_INTERVAL/2);
+    }
+    else
+    {
+        restart->setIcon(QIcon(restart_icon));
+        is_inverted = false;
+        flash_timer->setInterval(RESTART_FLASH_INTERVAL);
+    }
 }
 
 
