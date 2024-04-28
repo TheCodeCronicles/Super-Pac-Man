@@ -196,6 +196,7 @@ void Game::stop()
     for (int i = 0; i < Ghost::GhostNum; i++)
     {
         ghost_timer[i]->stop();
+        ghost_retreat_timer[i]->stop();
     }
 }
 

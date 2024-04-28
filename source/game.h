@@ -71,6 +71,7 @@ private:
     bool SpeedBoost = false;
     bool retreat[Ghost::GhostNum] = {true, true, true, true};
     bool retreat_timer_running[Ghost::GhostNum] = {false, false, false, false};
+    bool panic_tune_playing = false;
 
     QTimer *ghost_timer[Ghost::GhostNum];
     QTimer *ghost_retreat_timer[Ghost::GhostNum];

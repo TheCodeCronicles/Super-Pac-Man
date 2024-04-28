@@ -777,10 +777,17 @@ void Ghost::move()
     }
     else if (status == Panic)
     {
-        PanicTune->play();
+        if (game->panic_tune_playing == false)
+        {
+            PanicTune->setPosition(0);
+            PanicTune->play();
+            game->panic_tune_playing = true;
+        }
         panic_time--;
         if (panic_time <= 0)
-        {            
+        {
+            PanicTune->stop();
+            game->panic_tune_playing = false;
             status = Normal;
             game->ghost_timer[color]->setInterval(NORMAL_INTERVAL);
         }
