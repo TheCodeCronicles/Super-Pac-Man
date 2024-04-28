@@ -786,7 +786,6 @@ void Ghost::move()
         panic_time--;
         if (panic_time <= 0)
         {
-            PanicTune->stop();
             game->panic_tune_playing = false;
             status = Normal;
             game->ghost_timer[color]->setInterval(NORMAL_INTERVAL);

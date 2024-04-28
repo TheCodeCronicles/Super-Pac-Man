@@ -54,6 +54,9 @@ Pacman::Pacman() : GameObject(
 
     eatSound = new QMediaPlayer();
     eatSound->setMedia(QUrl("qrc:/game_objects/Sounds/pacman_chomp.wav"));
+
+    P3Sound = new QMediaPlayer();
+    P3Sound->setMedia(QUrl("qrc:/game_objects/Sounds/mixkit-arcade-game-explosion-2759.wav"));
 }
 
 void Pacman::moveup()
@@ -184,9 +187,13 @@ void Pacman::eat_ball(int __y, int __x)
                 }
 
         break;
+                //ALL GHOSTS DIE
     case PowerBall03:
-        eatSound->setPosition(0);
-        eatSound->play();
+        //eatSound->setPosition(0);
+        //eatSound->play();
+        P3Sound->setPosition(0);
+        P3Sound->setVolume(100);
+        P3Sound->play();
         game->score += obj->get_score();
         game->ball_num--;
         for (int i = 0; i < game->powerball03.size(); i++)
@@ -197,8 +204,13 @@ void Pacman::eat_ball(int __y, int __x)
                 break;
             }
         }
-        // Add functionality for power ball 03
-        // Handle the buffs associated with power ball 03
+        for (int i = 0; i < Ghost::GhostNum; i++)
+        {
+            game->ghost[i]->status = Ghost::Running;
+            game->ghost[i]->release_time = 200;
+            game->ghost[i]->is_released = false;
+            game->ghost_timer[i]->setInterval(RUNNING_INTERVAL);
+        }
         break;
     default:
         return;

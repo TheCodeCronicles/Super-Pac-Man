@@ -57,6 +57,7 @@ public:
 
 private:
     QMediaPlayer* eatSound;
+    QMediaPlayer* P3Sound;
     void moveup();
     void movedown();
     void moveleft();

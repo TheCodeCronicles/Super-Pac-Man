@@ -74,5 +74,6 @@
         <file>game_objects/map_objects/GameOver.png</file>
         <file>game_objects/map_objects/Win.png</file>
         <file>game_objects/map_objects/restart_inverted.png</file>
+        <file>game_objects/Sounds/mixkit-arcade-game-explosion-2759.wav</file>
     </qresource>
 </RCC>
