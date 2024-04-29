@@ -161,7 +161,10 @@ void Pacman::eat_ball(int __y, int __x)
         for (int i = 0; i < Ghost::GhostNum; i++) {
             if (game->ghost[i]->status != Ghost::Running)
             {
-                game->panic_tune_playing = false;
+                if (game->panic_tune_playing == true)
+                {
+                    game->panic_tune_playing = false;
+                }
                 game->ghost[i]->status = Ghost::Panic;
                 game->ghost[i]->panic_time = PANNIC_TIME;
                 game->ghost_timer[i]->setInterval(PANNIC_INTERVAL);

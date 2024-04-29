@@ -769,7 +769,7 @@ void Ghost::go_to_cage()
 }
 
 
-void Ghost::move()
+void Ghost:: move()
 {
     if (status != Running && release_time > 0)
     {       
@@ -777,12 +777,6 @@ void Ghost::move()
     }
     else if (status == Panic)
     {
-        if (game->panic_tune_playing == false)
-        {
-            PanicTune->setPosition(0);
-            PanicTune->play();
-            game->panic_tune_playing = true;
-        }
         panic_time--;
         if (panic_time <= 0)
         {
@@ -816,6 +810,13 @@ void Ghost::move()
                 break;
             case Panic:
                 dodge_pacman();
+                if (game->panic_tune_playing == false)
+                {
+                    PanicTune->setPosition(0);
+                    PanicTune->play();
+                    cout << "Panic Tune Playing" << endl;
+                    game->panic_tune_playing = true;
+                }
                 break;
             default:
                 break;
