@@ -34,7 +34,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QLabel *score_title, *score;
-    QLabel *win_label, *lose_label, *start_label, *ready_label;
+    QLabel *win_label, *lose_label, *start_label, *ready_label, *Buff_Label, *Nerf_Label;
     QTimer *score_timer;
     QTimer *flash_timer;
     QTimer *initial_delay;

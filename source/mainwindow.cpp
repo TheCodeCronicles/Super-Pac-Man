@@ -78,6 +78,18 @@ void MainWindow::initLabels()
     score_title->setStyleSheet("QLabel {font-family: Fixedsys;color: white;font-size: 16px;}");
     score_title->setGeometry(50, 12, 60, 26);
 
+    // Buff label
+    Buff_Label = new QLabel(this);
+    Buff_Label->setText("BUFFS:");
+    Buff_Label->setStyleSheet("QLabel {font-family: Fixedsys;color: Blue;font-size: 32px;}");
+    Buff_Label->setGeometry(50, 540, 60, 26);
+
+    // Nerf label
+    Nerf_Label = new QLabel(this);
+    Nerf_Label->setText("NERFS:");
+    Nerf_Label->setStyleSheet("QLabel {font-family: Fixedsys;color: Red;font-size: 32px;}");
+    Nerf_Label->setGeometry(1125, 540, 60, 26);
+
     // Score label
     score = new QLabel(this);
     score->setIndent(-80);
