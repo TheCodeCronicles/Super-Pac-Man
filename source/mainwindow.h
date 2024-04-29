@@ -41,6 +41,7 @@ private:
     QLabel *kill_mode;
     Game *game;
     QPixmap restart_icon, restart_icon_inverted, start_icon, start_icon_inverted;
+    bool CanMove = false;
 
     QPushButton *start;
     QPushButton *restart;

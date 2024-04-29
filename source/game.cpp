@@ -6,7 +6,7 @@
 
 
 // interval number before ghosts going out the cage
-int GHOST_RELEASE_TIME[] = {0, 200, 400, 600};
+int GHOST_RELEASE_TIME[] = {500, 700, 900, 1100};
 
 Game::Game(int x, int y, int map_w, int map_h, QString map_src)
     : QGraphicsScene(x, y, W * map_w, W * map_h)

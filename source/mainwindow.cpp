@@ -147,6 +147,8 @@ void MainWindow::update_score()
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
+    if (CanMove == true)
+     {
     switch (e->key())
     {
     case Qt::Key_Up:
@@ -174,22 +176,25 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         game->pacman_next_direction(GameObject::Right);
         break;
     }
+    }
 }
 
 void MainWindow::start_button()
 {
+    CanMove = false;
     game->StartupTune->play();
     initial_delay->start();
     start->hide();
     ready_label->show();
     flash_timer->stop();
     is_inverted = false;
+    game->start();
 }
 
 void MainWindow::start_game()
 {
+    CanMove = true;
     ready_label->hide();
-    game->start();
     initial_delay->stop();
 }
 
