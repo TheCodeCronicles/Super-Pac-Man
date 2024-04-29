@@ -35,6 +35,7 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
     QPixmap powerballpix(":/game_objects/map_objects/power_ball.png");
     QPixmap powerball02pix(":/game_objects/map_objects/power_ball_02.png");
     QPixmap powerball03pix(":/game_objects/map_objects/power_ball_03.png");
+    QPixmap powerball04pix(":/game_objects/map_objects/power_ball_04.png");
     QPixmap gatepix(":/game_objects/map_objects/gate.png");
     QPixmap blankpix;
     QFile mapfile(map_src);
@@ -99,6 +100,14 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
                 powerball03.push_back(map[i][j]);
                 ball_num++;
                 break;
+            case '7':
+                map[i][j] = new GameObject(GameObject::PowerBall04, powerball04pix);
+                map[i][j]->set_score(POWERBALL_SCORE);
+                map[i][j]->setPos(tmp_x, tmp_y);
+                addItem(map[i][j]);
+                powerball04.push_back(map[i][j]);
+                ball_num++;
+                break;
             case '3':
                 map[i][j] = new GameObject(GameObject::Blank, blankpix);
                 break;
@@ -161,9 +170,17 @@ void Game::start()
     connect(speed_boost_timer, SIGNAL(timeout()), this, SLOT(stop_speed_boost()));
     speed_boost_timer->setInterval(SPEED_BOOST_DURATION);
 
+    speed_nerf_timer = new QTimer(this);
+    connect(speed_nerf_timer, SIGNAL(timeout()), this, SLOT(stop_speed_nerf()));
+    speed_nerf_timer->setInterval(SPEED_NERF_DURATION);
+
     powerball03_flash_timer = new QTimer(this);
     connect(powerball03_flash_timer, SIGNAL(timeout()), this , SLOT(powerball03_flash()));
     powerball03_flash_timer->start(FLASH_INTERVAL);
+
+    powerball04_flash_timer = new QTimer(this);
+    connect(powerball04_flash_timer, SIGNAL(timeout()), this , SLOT(powerball04_flash()));
+    powerball04_flash_timer->start(FLASH_INTERVAL);
 
     pacman_timer = new QTimer(this);
     connect(pacman_timer, SIGNAL(timeout()), this , SLOT(pacman_handler()));
@@ -191,6 +208,7 @@ void Game::stop()
     powerball_flash_timer->stop();
     powerball02_flash_timer->stop();
     powerball03_flash_timer->stop();
+    powerball04_flash_timer->stop();
 
     for (int i = 0; i < Ghost::GhostNum; i++)
     {
@@ -258,6 +276,12 @@ void Game::stop_speed_boost()
     speed_boost_timer->stop();
 }
 
+void Game::stop_speed_nerf()
+{
+    SpeedNerf = false;
+    speed_nerf_timer->stop();
+}
+
 void Game::powerball03_flash()
 {
     if (powerball03.empty())
@@ -281,6 +305,32 @@ void Game::powerball03_flash()
             powerball03.at(i)->show();
         }
         flash03_tick = 1;
+    }
+}
+
+void Game::powerball04_flash()
+{
+    if (powerball04.empty())
+    {
+        powerball04_flash_timer->stop();
+        return;
+    }
+
+    if (flash04_tick)
+    {
+        for (int i = 0; i < powerball04.size(); i++)
+        {
+            powerball04.at(i)->hide();
+        }
+        flash04_tick = 0;
+    }
+    else
+    {
+        for (int i = 0; i < powerball04.size(); i++)
+        {
+            powerball04.at(i)->show();
+        }
+        flash04_tick = 1;
     }
 }
 
@@ -338,6 +388,7 @@ Game::~Game()
     delete powerball_flash_timer;
     delete powerball02_flash_timer;
     delete powerball03_flash_timer;
+    delete powerball04_flash_timer;
     for (int i = 0; i < Ghost::GhostNum; i++)
     {
         delete ghost_timer[i];

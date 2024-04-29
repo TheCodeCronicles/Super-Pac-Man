@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowTitle(tr("pac-man"));
+    setWindowTitle(tr("Super Pac-Man"));
 
     /* Initialize graphicsview and game scene */
     ui->graphicsView->setStyleSheet("QGraphicsView {border: none;}");

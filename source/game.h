@@ -25,7 +25,8 @@ using namespace std;
 #define PANNIC_TIME     500        // interval number of pannic ghosts
 #define FLASH_INTERVAL 200          // flash interval of powerballs
 #define RESTART_FLASH_INTERVAL 600  // flash interval for restart button
-#define SPEED_BOOST_DURATION 5000 // Speed boost duration in milliseconds (adjust as needed)
+#define SPEED_BOOST_DURATION 5000   // Speed boost duration in milliseconds (adjust as needed)
+#define SPEED_NERF_DURATION 5000    // Speed nerf duration in milliseconds (adjust as needed)
 #define MAX_GHOST_RETREAT_TIME 10000 // Maximum time a ghost is allowed to retreat to cage (To avoid ghosts getting stuck)
 
 /* Game control class */
@@ -49,6 +50,7 @@ public:
     QVector<GameObject*> powerball;     // pointers of powerball
     QVector<GameObject*> powerball02;   // pointers of powerball 2
     QVector<GameObject*> powerball03;   // pointers of powerball 3
+    QVector<GameObject*> powerball04;   // pointers of powerball 3
     GameStatus stat;
     QMediaPlayer *StartupTune;
     QMediaPlayer *DeathTune;
@@ -63,8 +65,10 @@ private slots:
     void powerball_flash();
     void powerball02_flash();
     void powerball03_flash();
+    void powerball04_flash();
     void ghost_handler(int);
     void stop_speed_boost();
+    void stop_speed_nerf();
 
 private:
     int map_height, map_width;      // game map (20 x 29 in this app)
@@ -72,6 +76,7 @@ private:
     int ball_num, eat_num, score;
     int geo_x, geo_y;               // geometric coordinate
     bool SpeedBoost = false;
+    bool SpeedNerf = false;
     bool retreat[Ghost::GhostNum] = {true, true, true, true};
     bool retreat_timer_running[Ghost::GhostNum] = {false, false, false, false};
     bool panic_tune_playing = false;
@@ -82,10 +87,13 @@ private:
     QTimer *powerball_flash_timer;
     QTimer *powerball02_flash_timer;
     QTimer *speed_boost_timer;
+    QTimer *speed_nerf_timer;
     QTimer *powerball03_flash_timer;
+    QTimer *powerball04_flash_timer;
     bool flash_tick;
     bool flash02_tick;
     bool flash03_tick;
+    bool flash04_tick;
 
 
 };

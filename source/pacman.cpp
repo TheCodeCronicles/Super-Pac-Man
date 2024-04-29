@@ -71,6 +71,10 @@ void Pacman::moveup()
     {
         setY(static_cast<int>(y()) - 2);
     }
+    else if (game->SpeedNerf == true)
+    {
+        setY(static_cast<double>(y()) - 0.5);
+    }
     else
     {
         setY(static_cast<int>(y()) - 1);
@@ -90,6 +94,10 @@ void Pacman::moveleft()
     {
         setX(static_cast<int>(x()) - 2);
     }
+    else if (game->SpeedNerf == true)
+    {
+        setX(static_cast<double>(x()) - 0.5);
+    }
     else
     {
         setX(static_cast<int>(x()) - 1);
@@ -108,6 +116,10 @@ void Pacman::movedown()
     {
         setY(static_cast<int>(y()) + 2);
     }
+    else if (game->SpeedNerf == true)
+    {
+        setY(static_cast<double>(y()) + 0.5);
+    }
     else
     {
         setY(static_cast<int>(y()) + 1);
@@ -125,6 +137,10 @@ void Pacman::moveright()
     if (game->SpeedBoost == true)
     {
         setX(static_cast<int>(x()) + 2);
+    }
+    else if (game->SpeedNerf == true)
+    {
+        setX(static_cast<double>(x()) + 0.5);
     }
     else
     {
@@ -214,6 +230,25 @@ void Pacman::eat_ball(int __y, int __x)
             game->ghost[i]->is_released = false;
             game->ghost_timer[i]->setInterval(RUNNING_INTERVAL);
         }
+        break;
+    case PowerBall04:
+        // Speed Nerf
+        eatSound->setPosition(0);
+        eatSound->play();
+                game->SpeedNerf = true;
+                game->speed_nerf_timer->start();
+                game->score += obj->get_score();
+                game->ball_num--;
+                // Remove the eaten PowerBall04 from the vector
+                for (int i = 0; i < game->powerball04.size(); i++)
+                {
+                    if (game->powerball04.at(i) == obj)
+                    {
+                        game->powerball04.remove(i);
+                        break;
+                    }
+                }
+
         break;
     default:
         return;

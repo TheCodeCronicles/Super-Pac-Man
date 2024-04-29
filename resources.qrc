@@ -81,5 +81,6 @@
         <file>game_objects/map_objects/no.png</file>
         <file>game_objects/map_objects/ready.png</file>
         <file>game_objects/map_objects/start_inverted.png</file>
+        <file>game_objects/map_objects/power_ball_04.png</file>
     </qresource>
 </RCC>
