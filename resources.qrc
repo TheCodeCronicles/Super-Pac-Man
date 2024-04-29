@@ -75,5 +75,11 @@
         <file>game_objects/map_objects/Win.png</file>
         <file>game_objects/map_objects/restart_inverted.png</file>
         <file>game_objects/Sounds/mixkit-arcade-game-explosion-2759.wav</file>
+        <file>game_objects/map_objects/are_you_ready.png</file>
+        <file>game_objects/map_objects/start.png</file>
+        <file>game_objects/map_objects/yes.png</file>
+        <file>game_objects/map_objects/no.png</file>
+        <file>game_objects/map_objects/ready.png</file>
+        <file>game_objects/map_objects/start_inverted.png</file>
     </qresource>
 </RCC>

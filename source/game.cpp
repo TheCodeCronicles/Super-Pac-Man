@@ -43,7 +43,6 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
     // PLAY STARTING TUNE
     StartupTune = new QMediaPlayer();
     StartupTune->setMedia(QUrl("qrc:/game_objects/Sounds/StartupTune.wav"));
-    StartupTune->play();
 
     // PLAY STARTING TUNE
     DeathTune = new QMediaPlayer();

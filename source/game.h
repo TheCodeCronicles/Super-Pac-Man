@@ -14,6 +14,7 @@ using namespace std;
 
 
 /* Changeable game options */
+#define INITIAL_DELAY   5000
 #define BALL_SCORE      10          // score of balls
 #define POWERBALL_SCORE 30          // score of powerballs
 #define GHOST_SCORE     50          // score of ghosts
@@ -49,6 +50,8 @@ public:
     QVector<GameObject*> powerball02;   // pointers of powerball 2
     QVector<GameObject*> powerball03;   // pointers of powerball 3
     GameStatus stat;
+    QMediaPlayer *StartupTune;
+    QMediaPlayer *DeathTune;
 
     friend class Pacman;
     friend class Ghost;
@@ -83,8 +86,7 @@ private:
     bool flash_tick;
     bool flash02_tick;
     bool flash03_tick;
-    QMediaPlayer *StartupTune;
-    QMediaPlayer *DeathTune;
+
 
 };
 

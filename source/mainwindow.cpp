@@ -13,6 +13,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setBackgroundBrush(Qt::black);
     ui->graphicsView->setFocusPolicy(Qt::NoFocus);
 
+    start = new QPushButton(this);
+    start_icon = QPixmap(":/game_objects/map_objects/start.png");
+    start_icon_inverted = QPixmap(":/game_objects/map_objects/start_inverted.png");
+    start->setIcon(QIcon(start_icon));
+    start->setFixedSize(start->size());
+    start->setIconSize(start->size());
+    start->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
+    start->move((width()-start->width())/2 - 4, (height() - 60));
+    connect(start, &QPushButton::clicked, this, &MainWindow::start_button);
+    start->show();
+    start->setFocusPolicy(Qt::NoFocus);
+
     restart = new QPushButton(this);
     restart_icon = QPixmap(":/game_objects/map_objects/restart.png");
     restart_icon_inverted = QPixmap(":/game_objects/map_objects/restart_inverted.png");
@@ -28,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(flash_timer, SIGNAL(timeout()), this, SLOT(flash_button()));
     flash_timer->setInterval(RESTART_FLASH_INTERVAL);
 
+    initial_delay = new QTimer(this);
+    connect(initial_delay, SIGNAL(timeout()), this, SLOT(start_game()));
+    initial_delay->setInterval(INITIAL_DELAY);
+
 
     int map_height = 20, map_width = 57;            // 20x57 game map
     int x = 50, y = 130;                             // x y in mainwindow
@@ -38,7 +54,8 @@ MainWindow::MainWindow(QWidget *parent)
     game = new Game(x, y, map_width, map_height, ":/game_objects/map_objects/map.txt");
     ui->graphicsView->setScene(game);
     initLabels();
-    game->start();
+    flash_timer->start();
+    //game->start();            // Uncomment to bypass start button (For Development)
 }
 
 
@@ -67,6 +84,15 @@ void MainWindow::initLabels()
     score->setText("0");
     score->setStyleSheet("QLabel {font-family: Fixedsys;color: white;font-size: 16px;}");
     score->setGeometry(110, 12, 150, 26);
+
+    ready_label = new QLabel(this);
+    QImage game_ready;
+    game_ready.load(":/game_objects/map_objects/ready.png");
+    QPixmap ready_pixmap = QPixmap::fromImage(game_ready);
+    ready_label->setPixmap(ready_pixmap);
+    ready_label->setScaledContents(true);
+    ready_label->setGeometry((width() - ready_label->width()) / 2-10, height() - 75, ready_label->width(), ready_label->height());
+    ready_label->hide();
 
     win_label = new QLabel(this);
     QImage game_win;
@@ -97,7 +123,6 @@ void MainWindow::initLabels()
     score_timer->start(25);
     connect(score_timer, SIGNAL(timeout()), this , SLOT(update_score()));
 }
-
 
 /* Update score UI */
 void MainWindow::update_score()
@@ -139,6 +164,23 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     }
 }
 
+void MainWindow::start_button()
+{
+    game->StartupTune->play();
+    initial_delay->start();
+    start->hide();
+    ready_label->show();
+    flash_timer->stop();
+    is_inverted = false;
+}
+
+void MainWindow::start_game()
+{
+    ready_label->hide();
+    game->start();
+    initial_delay->stop();
+}
+
 void MainWindow::restart_game()
 {
     qApp->quit();
@@ -150,12 +192,14 @@ void MainWindow::flash_button()
     if (is_inverted == false)
     {
         restart->setIcon(QIcon(restart_icon_inverted));
+        start->setIcon((QIcon(start_icon_inverted)));
         is_inverted = true;
         flash_timer->setInterval(RESTART_FLASH_INTERVAL/2);
     }
     else
     {
         restart->setIcon(QIcon(restart_icon));
+        start->setIcon((QIcon(start_icon)));
         is_inverted = false;
         flash_timer->setInterval(RESTART_FLASH_INTERVAL);
     }
