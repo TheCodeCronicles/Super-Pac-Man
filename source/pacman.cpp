@@ -192,6 +192,7 @@ void Pacman::eat_ball(int __y, int __x)
         eatSound->setPosition(0);
         eatSound->play();
                 game->SpeedBoost = true;
+                game->SpeedNerf = false;
                 game->speed_boost_timer->start();
                 game->score += obj->get_score();
                 game->ball_num--;
@@ -236,6 +237,7 @@ void Pacman::eat_ball(int __y, int __x)
         eatSound->setPosition(0);
         eatSound->play();
                 game->SpeedNerf = true;
+                game->SpeedBoost = false;
                 game->speed_nerf_timer->start();
                 game->score += obj->get_score();
                 game->ball_num--;

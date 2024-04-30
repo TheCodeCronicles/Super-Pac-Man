@@ -40,17 +40,22 @@ public:
     ~Game();
     void start();
     void stop();
+    const static int PowerballNum = 4;
     void pacman_next_direction(GameObject::Dir);
     int get_score();
+    char gen_probabalistic_char();
 
-    GameObject ***map;                  // the map of pacman game
-    GameObject *gate;                   // pointer of the gate of cage of ghosts
-    Pacman *pacman;                     // pointer of pacman
-    Ghost *ghost[Ghost::GhostNum];      // pointers of ghosts
-    QVector<GameObject*> powerball;     // pointers of powerball
-    QVector<GameObject*> powerball02;   // pointers of powerball 2
-    QVector<GameObject*> powerball03;   // pointers of powerball 3
-    QVector<GameObject*> powerball04;   // pointers of powerball 3
+
+    GameObject ***map;                                                  // the map of pacman game
+    GameObject *gate;                                                   // pointer of the gate of cage of ghosts
+    Pacman *pacman;                                                     // pointer of pacman
+    Ghost *ghost[Ghost::GhostNum];                                      // pointers of ghosts
+    char powerballs[Game::PowerballNum] = {'4', '5', '6', '7'};         // powerball definition characters (for case statement)
+    double probabilities[Game::PowerballNum] = {0.4, 0.3, 0.15, 0.15};  // probabilities of powerballs spawning
+    QVector<GameObject*> powerball;                                     // pointers of powerball
+    QVector<GameObject*> powerball02;                                   // pointers of powerball 2
+    QVector<GameObject*> powerball03;                                   // pointers of powerball 3
+    QVector<GameObject*> powerball04;                                   // pointers of powerball 3
     GameStatus stat;
     QMediaPlayer *StartupTune;
     QMediaPlayer *DeathTune;

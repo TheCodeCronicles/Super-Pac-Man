@@ -62,6 +62,13 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
             // Calculate the temporary x and y coordinates based on the current position in the loop
             int tmp_x = x + (j * W);
             int tmp_y = y + (i * W);
+            if (line[j] == '4')
+            {
+                //line[j] = QRandomGenerator::global()->bounded('4', '7');
+                line[j] = gen_probabalistic_char();
+                cout << line[j] << endl;
+            }
+
             switch (line[j])
             {
             case '1':
@@ -215,6 +222,29 @@ void Game::stop()
         ghost_timer[i]->stop();
         ghost_retreat_timer[i]->stop();
     }
+}
+
+char Game::gen_probabalistic_char()
+{
+    double cumulative = 0.0;
+    double cumulative_probabilities[Game::PowerballNum];
+    for (int i = 0 ; i < Game::PowerballNum ; ++i)
+    {
+        cumulative += probabilities[i];
+        cumulative_probabilities[i] = cumulative;
+    }
+
+    double random_value = QRandomGenerator::global()->generateDouble() * cumulative;
+
+    for (int i = 0 ; i < Game::PowerballNum ; ++i)
+    {
+        if (random_value < cumulative_probabilities[i])
+        {
+            return powerballs[i];
+        }
+    }
+
+    return '4';
 }
 
 
