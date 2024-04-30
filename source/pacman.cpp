@@ -175,7 +175,7 @@ void Pacman::eat_ball(int __y, int __x)
         }
         // Trigger panic state for ghosts only when regular power ball is eaten
         for (int i = 0; i < Ghost::GhostNum; i++) {
-            if (game->ghost[i]->status != Ghost::Running)
+            if (game->ghost[i]->status != Ghost::Running && game->ghost[i]->is_released == true)
             {
                 if (game->panic_tune_playing == true)
                 {
