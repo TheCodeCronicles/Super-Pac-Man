@@ -381,6 +381,14 @@ void Game::ghost_handler(int ghost_id)
     {
         stop();
     }
+
+    if (ghost[0]->status == Ghost::Normal
+        && ghost[1]->status == Ghost::Normal
+        && ghost[2]->status == Ghost::Normal
+        && ghost[3]->status == Ghost::Normal)
+    {
+        Kaboom = false;
+    }
 }
 
 void Game::ghost_retreat_handler(int ghost_id)

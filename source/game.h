@@ -6,6 +6,8 @@
 #include <QGraphicsItem>
 #include <QTimer>
 #include <QPair>
+#include <QLabel>
+#include <QList>
 #include <iostream>
 #include "gameobject.h"
 #include <QMediaPlayer>
@@ -44,6 +46,10 @@ public:
     void pacman_next_direction(GameObject::Dir);
     int get_score();
     char gen_probabalistic_char();
+    bool Panic = false;
+    bool SpeedBoost = false;
+    bool SpeedNerf = false;
+    bool Kaboom = false;
 
 
     GameObject ***map;                                                  // the map of pacman game
@@ -59,6 +65,9 @@ public:
     GameStatus stat;
     QMediaPlayer *StartupTune;
     QMediaPlayer *DeathTune;
+    QList<QLabel*> buffs;
+    QList<QLabel*> nerfs;
+
 
     friend class Pacman;
     friend class Ghost;
@@ -80,8 +89,6 @@ private:
     int map_size;                   // map_width * map_height
     int ball_num, eat_num, score;
     int geo_x, geo_y;               // geometric coordinate
-    bool SpeedBoost = false;
-    bool SpeedNerf = false;
     bool retreat[Ghost::GhostNum] = {true, true, true, true};
     bool retreat_timer_running[Ghost::GhostNum] = {false, false, false, false};
     bool panic_tune_playing = false;

@@ -44,6 +44,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(initial_delay, SIGNAL(timeout()), this, SLOT(start_game()));
     initial_delay->setInterval(INITIAL_DELAY);
 
+    label_display_timer = new QTimer(this);
+    connect(label_display_timer, SIGNAL(timeout()), this, SLOT(display_labels()));
+    label_display_timer->start(10);
+
 
     int map_height = 20, map_width = 57;            // 20x57 game map
     int x = 50, y = 130;                             // x y in mainwindow
@@ -124,6 +128,41 @@ void MainWindow::initLabels()
     lose_label->setGeometry((width() - lose_label->width()*1.35) / 2, height() - 75, lose_label->width()*1.2, lose_label->height()*1.2);
     lose_label->hide();
 
+    panic_label = new QLabel(this);
+    QImage panic_icon;
+    panic_icon.load(":/game_objects/map_objects/panic.png");
+    QPixmap panic_pixmap = QPixmap::fromImage(panic_icon);
+    panic_label->setPixmap(panic_pixmap);
+    panic_label->setScaledContents(true);
+    panic_label->setFixedSize(25, 25);
+    panic_label->hide();
+
+    speedboost_label = new QLabel(this);
+    QImage speedboost_icon;
+    speedboost_icon.load(":/game_objects/map_objects/speedboost.png");
+    QPixmap speedboost_pixmap = QPixmap::fromImage(speedboost_icon);
+    speedboost_label->setPixmap(speedboost_pixmap);
+    speedboost_label->setScaledContents(true);
+    speedboost_label->setFixedSize(40, 25);
+    speedboost_label->hide();
+
+    speednerf_label = new QLabel(this);
+    QImage speednerf_icon;
+    speednerf_icon.load(":/game_objects/map_objects/speednerf.png");
+    QPixmap speednerf_pixmap = QPixmap::fromImage(speednerf_icon);
+    speednerf_label->setPixmap(speednerf_pixmap);
+    speednerf_label->setScaledContents(true);
+    speednerf_label->setFixedSize(30, 25);
+    speednerf_label->hide();
+
+    kaboom_label = new QLabel(this);
+    QImage kaboom_icon;
+    kaboom_icon.load(":/game_objects/map_objects/kaboom.png");
+    QPixmap kaboom_pixmap = QPixmap::fromImage(kaboom_icon);
+    kaboom_label->setPixmap(kaboom_pixmap);
+    kaboom_label->setScaledContents(true);
+    kaboom_label->setFixedSize(25, 25);
+    kaboom_label->hide();
 
     kill_mode = new QLabel(this);
     kill_mode->hide();
@@ -155,6 +194,67 @@ void MainWindow::update_score()
         flash_timer->start();
     }
 }
+
+void MainWindow::display_labels()
+{
+    int x = 50;
+    int y = height() - 25;
+
+    if (game->Panic == true && !game->buffs.contains(panic_label))
+    {
+        game->buffs.append(panic_label);
+    }
+    else if (game->Panic == false && game->buffs.contains(panic_label))
+    {
+        game->buffs.removeOne(panic_label);
+        panic_label->hide();
+    }
+
+    if (game->SpeedBoost == true && !game->buffs.contains(speedboost_label))
+    {
+        game->buffs.append(speedboost_label);
+    }
+    else if (game->SpeedBoost == false && game->buffs.contains(speedboost_label))
+    {
+        game->buffs.removeOne(speedboost_label);
+        speedboost_label->hide();
+    }
+
+    if (game->SpeedNerf == true && !game->nerfs.contains(speednerf_label))
+    {
+        game->nerfs.append(speednerf_label);
+    }
+    else if (game->SpeedNerf == false && game->nerfs.contains(speednerf_label))
+    {
+        game->nerfs.removeOne(speednerf_label);
+        speednerf_label->hide();
+    }
+
+    if (game->Kaboom == true && !game->buffs.contains(kaboom_label))
+    {
+        game->buffs.append(kaboom_label);
+    }
+    else if (game->Kaboom == false && game->buffs.contains(kaboom_label))
+    {
+        game->buffs.removeOne(kaboom_label);
+        kaboom_label->hide();
+    }
+
+    for (QLabel* buff : game->buffs) {
+        buff->move(x, y - buff->height());
+        buff->show();
+        x += buff->width() + 10; // Adjust for spacing
+    }
+
+    x = 100;
+
+    for (QLabel* nerf : game->nerfs) {
+        nerf->move(width()- x, y - nerf->height());
+        nerf->show();
+        x -= nerf->width() - 10; // Adjust for spacing
+    }
+}
+
 
 
 void MainWindow::keyPressEvent(QKeyEvent *e)

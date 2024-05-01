@@ -782,6 +782,7 @@ void Ghost:: move()
         {
             game->panic_tune_playing = false;
             status = Normal;
+            game->Panic = false;
             game->ghost_timer[color]->setInterval(NORMAL_INTERVAL);
         }
     }
@@ -842,6 +843,7 @@ void Ghost:: move()
                     if (_x == game->gate->get_x() && _y == game->gate->get_y() + 1)
                     {
                         status = Normal;
+                        game->Panic = false;
                         game->ghost_timer[color]->setInterval(NORMAL_INTERVAL);
                         game->retreat[color] = true;
                         game->ghost_retreat_timer[color]->stop();
@@ -867,6 +869,7 @@ void Ghost:: move()
                             setX(game->gate->x());
                             setY(game->gate->y());
                             status = Normal;
+                            game->Panic = false;
                             game->ghost_timer[color]->setInterval(NORMAL_INTERVAL);
                             game->retreat[color] = true;
                             game->ghost_retreat_timer[color]->stop();

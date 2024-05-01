@@ -161,10 +161,13 @@ void Pacman::eat_ball(int __y, int __x)
         game->ball_num--;       
         break;
     case PowerBall:
+        // Panic State
+        game->Panic = true;
         eatSound->setPosition(0);
         eatSound->play();
         game->score += obj->get_score();
         game->ball_num--;
+
         for (int i = 0; i < game->powerball.size(); i++)
         {
             if (game->powerball.at(i) == obj)
@@ -188,29 +191,29 @@ void Pacman::eat_ball(int __y, int __x)
         }
         break;
     case PowerBall02:
-        // Handling for PowerBall02
+        // Speed Boost
+        game->SpeedBoost = true;
+        game->SpeedNerf = false;
         eatSound->setPosition(0);
         eatSound->play();
-                game->SpeedBoost = true;
-                game->SpeedNerf = false;
-                game->speed_boost_timer->start();
-                game->score += obj->get_score();
-                game->ball_num--;
-                // Remove the eaten PowerBall02 from the vector
-                for (int i = 0; i < game->powerball02.size(); i++)
-                {
-                    if (game->powerball02.at(i) == obj)
-                    {
-                        game->powerball02.remove(i);
-                        break;
-                    }
-                }
-
-        break;
-                //ALL GHOSTS DIE
+        game->speed_boost_timer->start();
+        game->score += obj->get_score();
+        game->ball_num--;
+        // Remove the eaten PowerBall02 from the vector
+        for (int i = 0; i < game->powerball02.size(); i++)
+        {
+            if (game->powerball02.at(i) == obj)
+            {
+                game->powerball02.remove(i);
+                break;
+            }
+        }
+        break;            
     case PowerBall03:
+        //ALL GHOSTS DIE
         //eatSound->setPosition(0);
         //eatSound->play();
+        game->Kaboom = true;
         P3Sound->setPosition(0);
         P3Sound->setVolume(100);
         P3Sound->play();
@@ -234,23 +237,22 @@ void Pacman::eat_ball(int __y, int __x)
         break;
     case PowerBall04:
         // Speed Nerf
+        game->SpeedNerf = true;
+        game->SpeedBoost = false;
         eatSound->setPosition(0);
         eatSound->play();
-                game->SpeedNerf = true;
-                game->SpeedBoost = false;
-                game->speed_nerf_timer->start();
-                game->score += obj->get_score();
-                game->ball_num--;
-                // Remove the eaten PowerBall04 from the vector
-                for (int i = 0; i < game->powerball04.size(); i++)
-                {
-                    if (game->powerball04.at(i) == obj)
-                    {
-                        game->powerball04.remove(i);
-                        break;
-                    }
-                }
-
+        game->speed_nerf_timer->start();
+        game->score += obj->get_score();
+        game->ball_num--;
+        // Remove the eaten PowerBall04 from the vector
+        for (int i = 0; i < game->powerball04.size(); i++)
+        {
+            if (game->powerball04.at(i) == obj)
+            {
+                game->powerball04.remove(i);
+                break;
+            }
+        }
         break;
     default:
         return;

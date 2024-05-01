@@ -82,5 +82,9 @@
         <file>game_objects/map_objects/ready.png</file>
         <file>game_objects/map_objects/start_inverted.png</file>
         <file>game_objects/map_objects/power_ball_04.png</file>
+        <file>game_objects/map_objects/kaboom.png</file>
+        <file>game_objects/map_objects/speedboost.png</file>
+        <file>game_objects/map_objects/speednerf.png</file>
+        <file>game_objects/map_objects/panic.png</file>
     </qresource>
 </RCC>

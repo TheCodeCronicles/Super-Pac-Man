@@ -30,12 +30,24 @@ private slots:
     void start_game();
     void restart_game();
     void flash_button();
+    void display_labels();
 
 private:
     Ui::MainWindow *ui;
     QLabel *score_title, *score;
-    QLabel *win_label, *lose_label, *start_label, *ready_label, *Buff_Label, *Nerf_Label;
+    QLabel *win_label,
+           *lose_label,
+           *start_label,
+           *ready_label,
+           *Buff_Label,
+           *Nerf_Label,
+           *panic_label,
+           *speedboost_label,
+           *speednerf_label,
+           *kaboom_label;
     QTimer *score_timer;
+    QTimer *label_display_timer;
+    QTimer *kaboom;
     QTimer *flash_timer;
     QTimer *initial_delay;
     QLabel *kill_mode;
