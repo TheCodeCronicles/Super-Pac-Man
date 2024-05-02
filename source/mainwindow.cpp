@@ -275,33 +275,66 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     if (CanMove == true)
      {
-    switch (e->key())
-    {
-    case Qt::Key_Up:
-        game->pacman_next_direction(GameObject::Up);
-        break;
-    case Qt::Key_W:
-        game->pacman_next_direction(GameObject::Up);
-        break;
-    case Qt::Key_Left:
-        game->pacman_next_direction(GameObject::Left);
-        break;
-    case Qt::Key_A:
-        game->pacman_next_direction(GameObject::Left);
-        break;
-    case Qt::Key_Down:
-        game->pacman_next_direction(GameObject::Down);
-        break;
-    case Qt::Key_S:
-        game->pacman_next_direction(GameObject::Down);
-        break;
-    case Qt::Key_Right:
-        game->pacman_next_direction(GameObject::Right);
-        break;
-    case Qt::Key_D:
-        game->pacman_next_direction(GameObject::Right);
-        break;
-    }
+        if (game->Confusion == false)
+          {
+                switch (e->key())
+                {
+                case Qt::Key_Up:
+                    game->pacman_next_direction(GameObject::Up);
+                    break;
+                case Qt::Key_W:
+                    game->pacman_next_direction(GameObject::Up);
+                    break;
+                case Qt::Key_Left:
+                    game->pacman_next_direction(GameObject::Left);
+                    break;
+                case Qt::Key_A:
+                    game->pacman_next_direction(GameObject::Left);
+                    break;
+                case Qt::Key_Down:
+                    game->pacman_next_direction(GameObject::Down);
+                    break;
+                case Qt::Key_S:
+                    game->pacman_next_direction(GameObject::Down);
+                    break;
+                case Qt::Key_Right:
+                    game->pacman_next_direction(GameObject::Right);
+                    break;
+                case Qt::Key_D:
+                    game->pacman_next_direction(GameObject::Right);
+                    break;
+                }
+        }
+        else
+        {
+            switch (e->key())
+            {
+            case Qt::Key_Down:
+                game->pacman_next_direction(GameObject::Up);
+                break;
+            case Qt::Key_S:
+                game->pacman_next_direction(GameObject::Up);
+                break;
+            case Qt::Key_Right:
+                game->pacman_next_direction(GameObject::Left);
+                break;
+            case Qt::Key_D:
+                game->pacman_next_direction(GameObject::Left);
+                break;
+            case Qt::Key_Up:
+                game->pacman_next_direction(GameObject::Down);
+                break;
+            case Qt::Key_W:
+                game->pacman_next_direction(GameObject::Down);
+                break;
+            case Qt::Key_Left:
+                game->pacman_next_direction(GameObject::Right);
+                break;
+            case Qt::Key_A:
+                game->pacman_next_direction(GameObject::Right);
+                break;
+            }
+        }
     }
 }
 

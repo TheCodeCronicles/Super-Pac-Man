@@ -75,10 +75,6 @@ void Pacman::moveup()
     {
         setY(static_cast<double>(y()) - 0.5);
     }
-    else if (game->Confusion == true)
-    {
-        setY(static_cast<int>(y()) + 1);
-    }
     else
     {
         setY(static_cast<int>(y()) - 1);
@@ -102,10 +98,6 @@ void Pacman::moveleft()
     {
         setX(static_cast<double>(x()) - 0.5);
     }
-    else if (game->Confusion == true)
-    {
-        setX(static_cast<int>(x()) + 1);
-    }
     else
     {
         setX(static_cast<int>(x()) - 1);
@@ -128,10 +120,6 @@ void Pacman::movedown()
     {
         setY(static_cast<double>(y()) + 0.5);
     }
-    else if (game->Confusion == true)
-    {
-        setY(static_cast<int>(y()) - 1);
-    }
     else
     {
         setY(static_cast<int>(y()) + 1);
@@ -153,10 +141,6 @@ void Pacman::moveright()
     else if (game->SpeedNerf == true)
     {
         setX(static_cast<double>(x()) + 0.5);
-    }
-    else if (game->Confusion == true)
-    {
-        setX(static_cast<int>(x()) - 1);
     }
     else
     {
@@ -414,7 +398,7 @@ void Pacman::move()
     switch (dir)
     {
     case Stop:
-        break;
+        break;   
     case Up:
         if (y_remainder == 0 && !overlapable(_y - 1, _x))
         {
