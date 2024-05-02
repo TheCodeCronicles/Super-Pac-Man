@@ -55,6 +55,9 @@ Pacman::Pacman() : GameObject(
     eatSound = new QMediaPlayer();
     eatSound->setMedia(QUrl("qrc:/game_objects/Sounds/pacman_chomp.wav"));
 
+    ConfusedTune = new QMediaPlayer();
+    ConfusedTune->setMedia(QUrl("qrc:/game_objects/Sounds/Pacman_Confused.wav"));
+
     P3Sound = new QMediaPlayer();
     P3Sound->setMedia(QUrl("qrc:/game_objects/Sounds/mixkit-arcade-game-explosion-2759.wav"));
 }
@@ -256,6 +259,9 @@ void Pacman::eat_ball(int __y, int __x)
         break;
     case PowerBall05:
         // Confusion Nerf
+        ConfusedTune->stop();
+        ConfusedTune->setPosition(0);
+        ConfusedTune->play();
         game->Confusion = true;
         game->confusion_timer->start();
         eatSound->setPosition(0);
