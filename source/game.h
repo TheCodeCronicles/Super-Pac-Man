@@ -50,6 +50,7 @@ public:
     bool SpeedBoost = false;
     bool SpeedNerf = false;
     bool Kaboom = false;
+    bool GO_Away = false;
 
 
     GameObject ***map;                                                  // the map of pacman game
@@ -106,6 +107,7 @@ private:
     bool flash02_tick;
     bool flash03_tick;
     bool flash04_tick;
+    int GeneralCounter = 0;
 
 
 };

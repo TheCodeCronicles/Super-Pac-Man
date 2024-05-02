@@ -45,7 +45,7 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
     StartupTune = new QMediaPlayer();
     StartupTune->setMedia(QUrl("qrc:/game_objects/Sounds/StartupTune.wav"));
 
-    // PLAY STARTING TUNE
+    // PLAY DEATH TUNE
     DeathTune = new QMediaPlayer();
     DeathTune->setMedia(QUrl("qrc:/game_objects/Sounds/pacman_death.wav"));
 
@@ -366,6 +366,11 @@ void Game::powerball04_flash()
 
 void Game::pacman_handler()
 {
+    GeneralCounter += 1;
+
+    if (GeneralCounter == 700)
+        GO_Away = true;
+
     pacman->move();
     if (stat == Win)
     {

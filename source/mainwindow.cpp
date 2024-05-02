@@ -87,12 +87,21 @@ void MainWindow::initLabels()
     Buff_Label->setText("BUFFS:");
     Buff_Label->setStyleSheet("QLabel {font-family: Fixedsys;color: Blue;font-size: 32px;}");
     Buff_Label->setGeometry(50, 540, 60, 26);
+    Buff_Label->hide();
 
     // Nerf label
     Nerf_Label = new QLabel(this);
     Nerf_Label->setText("NERFS:");
     Nerf_Label->setStyleSheet("QLabel {font-family: Fixedsys;color: Red;font-size: 32px;}");
     Nerf_Label->setGeometry(1125, 540, 60, 26);
+    Nerf_Label->hide();
+
+    // GO label
+    GO_label = new QLabel(this);
+    GO_label->setText("GO!");
+    GO_label->setStyleSheet("QLabel {font-family: Fixedsys;color: Yellow;font-size: 64px;}");
+    GO_label->setGeometry((width() - GO_label->width()) / 2+30, height() - 75, GO_label->width(), GO_label->height());
+    GO_label->hide();
 
     // Score label
     score = new QLabel(this);
@@ -253,6 +262,9 @@ void MainWindow::display_labels()
         nerf->show();
         x -= nerf->width() - 10; // Adjust for spacing
     }
+
+    if (game->GO_Away == true)
+        GO_label->hide();
 }
 
 
@@ -300,6 +312,8 @@ void MainWindow::start_button()
     ready_label->show();
     flash_timer->stop();
     is_inverted = false;
+    Buff_Label->show();
+    Nerf_Label->show();
     game->start();
 }
 
@@ -308,6 +322,7 @@ void MainWindow::start_game()
     CanMove = true;
     ready_label->hide();
     initial_delay->stop();
+    GO_label->show();
 }
 
 void MainWindow::restart_game()

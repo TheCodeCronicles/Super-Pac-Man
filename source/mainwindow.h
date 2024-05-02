@@ -44,7 +44,8 @@ private:
            *panic_label,
            *speedboost_label,
            *speednerf_label,
-           *kaboom_label;
+           *kaboom_label,
+           *GO_label;
     QTimer *score_timer;
     QTimer *label_display_timer;
     QTimer *kaboom;
