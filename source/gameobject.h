@@ -16,7 +16,7 @@ class Game;
 class GameObject : public QGraphicsPixmapItem
 {
 public:
-    enum ObjectType {Ball, Wall, Gate, Pacman, Ghost, Blank, PowerBall, PowerBall02, PowerBall03, PowerBall04};
+    enum ObjectType {Ball, Wall, Gate, Pacman, Ghost, Blank, PowerBall, PowerBall02, PowerBall03, PowerBall04, PowerBall05};
     enum Dir {Up = 0, Down = 1, Left = 2, Right = 3, Stop = 4};
     static const int Width = 20;      // game object size by pixel
 

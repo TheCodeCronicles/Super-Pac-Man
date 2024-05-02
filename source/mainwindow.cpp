@@ -81,6 +81,7 @@ void MainWindow::initLabels()
     score_title->setText("Score");
     score_title->setStyleSheet("QLabel {font-family: Fixedsys;color: white;font-size: 16px;}");
     score_title->setGeometry(50, 12, 60, 26);
+    score_title->hide();
 
     // Buff label
     Buff_Label = new QLabel(this);
@@ -109,6 +110,7 @@ void MainWindow::initLabels()
     score->setText("0");
     score->setStyleSheet("QLabel {font-family: Fixedsys;color: white;font-size: 16px;}");
     score->setGeometry(110, 12, 150, 26);
+    score->hide();
 
     ready_label = new QLabel(this);
     QImage game_ready;
@@ -314,6 +316,8 @@ void MainWindow::start_button()
     is_inverted = false;
     Buff_Label->show();
     Nerf_Label->show();
+    score_title->show();
+    score->show();
     game->start();
 }
 

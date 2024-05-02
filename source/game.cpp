@@ -36,6 +36,7 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
     QPixmap powerball02pix(":/game_objects/map_objects/power_ball_02.png");
     QPixmap powerball03pix(":/game_objects/map_objects/power_ball_03.png");
     QPixmap powerball04pix(":/game_objects/map_objects/power_ball_04.png");
+    QPixmap powerball05pix(":/game_objects/map_objects/power_ball_05.png");
     QPixmap gatepix(":/game_objects/map_objects/gate.png");
     QPixmap blankpix;
     QFile mapfile(map_src);
@@ -115,6 +116,14 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
                 powerball04.push_back(map[i][j]);
                 ball_num++;
                 break;
+            case '8':
+                map[i][j] = new GameObject(GameObject::PowerBall05, powerball05pix);
+                map[i][j]->set_score(POWERBALL_SCORE);
+                map[i][j]->setPos(tmp_x, tmp_y);
+                addItem(map[i][j]);
+                powerball05.push_back(map[i][j]);
+                ball_num++;
+                break;
             case '3':
                 map[i][j] = new GameObject(GameObject::Blank, blankpix);
                 break;
@@ -181,6 +190,10 @@ void Game::start()
     connect(speed_nerf_timer, SIGNAL(timeout()), this, SLOT(stop_speed_nerf()));
     speed_nerf_timer->setInterval(SPEED_NERF_DURATION);
 
+    confusion_timer = new QTimer(this);
+    connect(confusion_timer, SIGNAL(timeout()), this, SLOT(stop_confusion()));
+    confusion_timer->setInterval(CONFUSION_DURATION);
+
     powerball03_flash_timer = new QTimer(this);
     connect(powerball03_flash_timer, SIGNAL(timeout()), this , SLOT(powerball03_flash()));
     powerball03_flash_timer->start(FLASH_INTERVAL);
@@ -188,6 +201,10 @@ void Game::start()
     powerball04_flash_timer = new QTimer(this);
     connect(powerball04_flash_timer, SIGNAL(timeout()), this , SLOT(powerball04_flash()));
     powerball04_flash_timer->start(FLASH_INTERVAL);
+
+    powerball05_flash_timer = new QTimer(this);
+    connect(powerball05_flash_timer, SIGNAL(timeout()), this , SLOT(powerball05_flash()));
+    powerball05_flash_timer->start(FLASH_INTERVAL);
 
     pacman_timer = new QTimer(this);
     connect(pacman_timer, SIGNAL(timeout()), this , SLOT(pacman_handler()));
@@ -216,6 +233,7 @@ void Game::stop()
     powerball02_flash_timer->stop();
     powerball03_flash_timer->stop();
     powerball04_flash_timer->stop();
+    powerball05_flash_timer->stop();
 
     for (int i = 0; i < Ghost::GhostNum; i++)
     {
@@ -312,6 +330,12 @@ void Game::stop_speed_nerf()
     speed_nerf_timer->stop();
 }
 
+void Game::stop_confusion()
+{
+    Confusion = false;
+    confusion_timer->stop();
+}
+
 void Game::powerball03_flash()
 {
     if (powerball03.empty())
@@ -361,6 +385,32 @@ void Game::powerball04_flash()
             powerball04.at(i)->show();
         }
         flash04_tick = 1;
+    }
+}
+
+void Game::powerball05_flash()
+{
+    if (powerball05.empty())
+    {
+        powerball05_flash_timer->stop();
+        return;
+    }
+
+    if (flash05_tick)
+    {
+        for (int i = 0; i < powerball05.size(); i++)
+        {
+            powerball05.at(i)->hide();
+        }
+        flash05_tick = 0;
+    }
+    else
+    {
+        for (int i = 0; i < powerball05.size(); i++)
+        {
+            powerball05.at(i)->show();
+        }
+        flash05_tick = 1;
     }
 }
 
@@ -432,6 +482,7 @@ Game::~Game()
     delete powerball02_flash_timer;
     delete powerball03_flash_timer;
     delete powerball04_flash_timer;
+    delete powerball05_flash_timer;
     for (int i = 0; i < Ghost::GhostNum; i++)
     {
         delete ghost_timer[i];

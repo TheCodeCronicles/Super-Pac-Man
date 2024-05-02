@@ -813,6 +813,7 @@ void Ghost:: move()
                 dodge_pacman();
                 if (game->panic_tune_playing == false)
                 {
+                    PanicTune->stop();
                     PanicTune->setPosition(0);
                     PanicTune->play();
                     cout << "Panic Tune Playing" << endl;

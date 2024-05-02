@@ -86,5 +86,6 @@
         <file>game_objects/map_objects/speedboost.png</file>
         <file>game_objects/map_objects/speednerf.png</file>
         <file>game_objects/map_objects/panic.png</file>
+        <file>game_objects/map_objects/power_ball_05.png</file>
     </qresource>
 </RCC>
