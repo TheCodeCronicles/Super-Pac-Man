@@ -88,5 +88,7 @@
         <file>game_objects/map_objects/panic.png</file>
         <file>game_objects/map_objects/power_ball_05.png</file>
         <file>game_objects/Sounds/Pacman_Confused.wav</file>
+        <file>game_objects/map_objects/power_ball_06.png</file>
+        <file>game_objects/map_objects/power_ball_07.png</file>
     </qresource>
 </RCC>

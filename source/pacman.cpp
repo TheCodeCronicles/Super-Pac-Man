@@ -279,6 +279,44 @@ void Pacman::eat_ball(int __y, int __x)
             }
         }
         break;
+    case PowerBall06:
+        // Invisible Buff
+        game->Invisible = true;
+        game->invisible_timer->start();
+        eatSound->setPosition(0);
+        eatSound->play();
+
+        game->score += obj->get_score();
+        game->ball_num--;
+        // Remove the eaten PowerBall06 from the vector
+        for (int i = 0; i < game->powerball06.size(); i++)
+        {
+            if (game->powerball06.at(i) == obj)
+            {
+                game->powerball06.remove(i);
+                break;
+            }
+        }
+        break;
+    case PowerBall07:
+        // Blindness Nerf
+        game->Blindness = true;
+        game->blindness_timer->start();
+        eatSound->setPosition(0);
+        eatSound->play();
+
+        game->score += obj->get_score();
+        game->ball_num--;
+        // Remove the eaten PowerBall07 from the vector
+        for (int i = 0; i < game->powerball07.size(); i++)
+        {
+            if (game->powerball07.at(i) == obj)
+            {
+                game->powerball07.remove(i);
+                break;
+            }
+        }
+        break;
     default:
         return;
     }

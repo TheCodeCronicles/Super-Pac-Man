@@ -29,7 +29,9 @@ using namespace std;
 #define RESTART_FLASH_INTERVAL 600  // flash interval for restart button
 #define SPEED_BOOST_DURATION 5000   // Speed boost duration in milliseconds (adjust as needed)
 #define SPEED_NERF_DURATION 5000
-#define CONFUSION_DURATION 5000// Speed nerf duration in milliseconds (adjust as needed)
+#define CONFUSION_DURATION 5000
+#define BLINDNESS_DURATION 5000
+#define INVISIBLE_DURATION 5000
 #define MAX_GHOST_RETREAT_TIME 10000 // Maximum time a ghost is allowed to retreat to cage (To avoid ghosts getting stuck)
 
 /* Game control class */
@@ -43,7 +45,7 @@ public:
     ~Game();
     void start();
     void stop();
-    const static int PowerballNum = 5;
+    const static int PowerballNum = 7;
     void pacman_next_direction(GameObject::Dir);
     int get_score();
     char gen_probabalistic_char();
@@ -51,6 +53,8 @@ public:
     bool SpeedBoost = false;
     bool SpeedNerf = false;
     bool Confusion = false;
+    bool Blindness = false;
+    bool Invisible = false;
     bool Kaboom = false;
     bool GO_Away = false;
 
@@ -59,13 +63,15 @@ public:
     GameObject *gate;                                                   // pointer of the gate of cage of ghosts
     Pacman *pacman;                                                     // pointer of pacman
     Ghost *ghost[Ghost::GhostNum];                                      // pointers of ghosts
-    char powerballs[Game::PowerballNum] = {'4', '5', '6', '7', '8'};         // powerball definition characters (for case statement)
-    double probabilities[Game::PowerballNum] = {0.4, 0.2, 0.15, 0.15, 0.1};  // probabilities of powerballs spawning
+    char powerballs[Game::PowerballNum] = {'4', '5', '6', '7', '8' , '9', 'L'};         // powerball definition characters (for case statement)
+    double probabilities[Game::PowerballNum] = {0.2, 0.15, 0.15, 0.15, 0.1, 0.1, 0.15};  // probabilities of powerballs spawning
     QVector<GameObject*> powerball;                                     // pointers of powerball
     QVector<GameObject*> powerball02;                                   // pointers of powerball 2
     QVector<GameObject*> powerball03;                                   // pointers of powerball 3
     QVector<GameObject*> powerball04;                                   // pointers of powerball 4
     QVector<GameObject*> powerball05;                                   // pointers of powerball 5
+    QVector<GameObject*> powerball06;                                   // pointers of powerball 6
+    QVector<GameObject*> powerball07;                                   // pointers of powerball 7
     GameStatus stat;
     QMediaPlayer *StartupTune;
     QMediaPlayer *DeathTune;
@@ -85,10 +91,14 @@ private slots:
     void powerball03_flash();
     void powerball04_flash();
     void powerball05_flash();
+    void powerball06_flash();
+    void powerball07_flash();
     void ghost_handler(int);
     void stop_speed_boost();
     void stop_speed_nerf();
     void stop_confusion();
+    void stop_blindness();
+    void stop_invisible();
 
 private:
     int map_height, map_width;      // game map (20 x 29 in this app)
@@ -107,14 +117,20 @@ private:
     QTimer *speed_boost_timer;
     QTimer *speed_nerf_timer;
     QTimer *confusion_timer;
+    QTimer *invisible_timer;
+    QTimer *blindness_timer;
     QTimer *powerball03_flash_timer;
     QTimer *powerball04_flash_timer;
     QTimer *powerball05_flash_timer;
+    QTimer *powerball06_flash_timer;
+    QTimer *powerball07_flash_timer;
     bool flash_tick;
     bool flash02_tick;
     bool flash03_tick;
     bool flash04_tick;
     bool flash05_tick;
+    bool flash06_tick;
+    bool flash07_tick;
     int GeneralCounter = 0;
 
 
