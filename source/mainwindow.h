@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QProcess>
 #include "game.h"
+#include "networkmanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,6 +32,7 @@ private slots:
     void restart_game();
     void flash_button();
     void display_labels();
+    void startNetwork();
 
 private:
     Ui::MainWindow *ui;
@@ -58,5 +60,6 @@ private:
 
     QPushButton *start;
     QPushButton *restart;
+    NetworkManager *networkManager;
 };
 #endif // MAINWINDOW_H

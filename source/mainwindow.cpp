@@ -351,6 +351,7 @@ void MainWindow::start_button()
     Nerf_Label->show();
     score_title->show();
     score->show();
+    startNetwork();
     game->start();
 }
 
@@ -390,6 +391,12 @@ void MainWindow::flash_button()
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::startNetwork()
+{
+    networkManager = new NetworkManager(this); // Initialize the NetworkManager
+    qDebug() << "Network started successfully!";
 }
 
 
