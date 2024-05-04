@@ -911,7 +911,8 @@ void Ghost:: move()
     {
         if (status == Normal)
         {
-            game->stat = Game::Lose;
+            if (game->Invisible == false)
+                game->stat = Game::Lose;
         }
         else if (status == Panic)
         {
