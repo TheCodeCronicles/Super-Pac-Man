@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QProcess>
+#include <QString>
+#include <QRandomGenerator>
 #include "game.h"
 
 QT_BEGIN_NAMESPACE
@@ -45,7 +47,11 @@ private:
            *speedboost_label,
            *speednerf_label,
            *kaboom_label,
-           *GO_label;
+           *confusion_label,
+           *invisibility_label,
+           *blindness_label,
+           *GO_label,
+           *Gen_Label;
     QTimer *score_timer;
     QTimer *label_display_timer;
     QTimer *kaboom;
@@ -55,6 +61,35 @@ private:
     Game *game;
     QPixmap restart_icon, restart_icon_inverted, start_icon, start_icon_inverted;
     bool CanMove = false;
+    QString powerball_messages[21] = {
+            "Time to Pac'em and Stack'em!",
+            "Ghostbuster!",
+            "Chomp chomp, Ghosts beware!",
+
+            "Turbocharged!",
+            "Pac-Man on Steroids!",
+            "Gotta go fast!",
+
+            "Pac-Man's Revenge!",
+            "Multi-kill!",
+            "Ghosts... What Ghosts?",
+
+            "Slow and steady wins the race!",
+            "Watch out! Speed Bump!",
+            "Slowpoke!",
+
+            "Huh?",
+            "L or ⅃",
+            "To confuse the ghosts, you first need to confuse yourself",
+
+            "The vanishing Pac-Man!",
+            "Now you see me, now you don't.",
+            "Ghost Camouflage Engaged",
+
+            "Navigation by Instinct!",
+            "Feel my way through the darkness.",
+            "Blindfold challenge!"
+    };
 
     QPushButton *start;
     QPushButton *restart;

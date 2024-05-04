@@ -83,12 +83,15 @@
         <file>game_objects/map_objects/start_inverted.png</file>
         <file>game_objects/map_objects/power_ball_04.png</file>
         <file>game_objects/map_objects/kaboom.png</file>
-        <file>game_objects/map_objects/speedboost.png</file>
-        <file>game_objects/map_objects/speednerf.png</file>
         <file>game_objects/map_objects/panic.png</file>
         <file>game_objects/map_objects/power_ball_05.png</file>
         <file>game_objects/Sounds/Pacman_Confused.wav</file>
         <file>game_objects/map_objects/power_ball_06.png</file>
         <file>game_objects/map_objects/power_ball_07.png</file>
+        <file>game_objects/map_objects/confusion.png</file>
+        <file>game_objects/map_objects/speednerf.png</file>
+        <file>game_objects/map_objects/speedboost.png</file>
+        <file>game_objects/map_objects/blindness.png</file>
+        <file>game_objects/map_objects/invisibility.png</file>
     </qresource>
 </RCC>

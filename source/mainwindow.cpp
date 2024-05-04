@@ -139,13 +139,17 @@ void MainWindow::initLabels()
     lose_label->setGeometry((width() - lose_label->width()*1.35) / 2, height() - 75, lose_label->width()*1.2, lose_label->height()*1.2);
     lose_label->hide();
 
+    Gen_Label = new QLabel(this);
+    Gen_Label->setStyleSheet("QLabel {font-family: Fixedsys;color: White;font-size: 32px;}");
+    Gen_Label->hide();
+
     panic_label = new QLabel(this);
     QImage panic_icon;
     panic_icon.load(":/game_objects/map_objects/panic.png");
     QPixmap panic_pixmap = QPixmap::fromImage(panic_icon);
     panic_label->setPixmap(panic_pixmap);
     panic_label->setScaledContents(true);
-    panic_label->setFixedSize(25, 25);
+    panic_label->setFixedSize(30, 30);
     panic_label->hide();
 
     speedboost_label = new QLabel(this);
@@ -154,7 +158,7 @@ void MainWindow::initLabels()
     QPixmap speedboost_pixmap = QPixmap::fromImage(speedboost_icon);
     speedboost_label->setPixmap(speedboost_pixmap);
     speedboost_label->setScaledContents(true);
-    speedboost_label->setFixedSize(40, 25);
+    speedboost_label->setFixedSize(45, 30);
     speedboost_label->hide();
 
     speednerf_label = new QLabel(this);
@@ -163,7 +167,7 @@ void MainWindow::initLabels()
     QPixmap speednerf_pixmap = QPixmap::fromImage(speednerf_icon);
     speednerf_label->setPixmap(speednerf_pixmap);
     speednerf_label->setScaledContents(true);
-    speednerf_label->setFixedSize(30, 25);
+    speednerf_label->setFixedSize(35, 30);
     speednerf_label->hide();
 
     kaboom_label = new QLabel(this);
@@ -172,14 +176,35 @@ void MainWindow::initLabels()
     QPixmap kaboom_pixmap = QPixmap::fromImage(kaboom_icon);
     kaboom_label->setPixmap(kaboom_pixmap);
     kaboom_label->setScaledContents(true);
-    kaboom_label->setFixedSize(25, 25);
+    kaboom_label->setFixedSize(30, 30);
     kaboom_label->hide();
 
-    kill_mode = new QLabel(this);
-    kill_mode->hide();
-    kill_mode->setText("KILL MODE!");
-    kill_mode->setStyleSheet("QLabel {font-family: Fixedsys;color: red;font-size: 16px;}");
-    kill_mode->setGeometry((width() - kill_mode->width()) / 2, height() - 40, kill_mode->width(), kill_mode->height());
+    confusion_label = new QLabel(this);
+    QImage confusion_icon;
+    confusion_icon.load(":/game_objects/map_objects/confusion.png");
+    QPixmap confusion_pixmap = QPixmap::fromImage(confusion_icon);
+    confusion_label->setPixmap(confusion_pixmap);
+    confusion_label->setScaledContents(true);
+    confusion_label->setFixedSize(30, 30);
+    confusion_label->hide();
+
+    invisibility_label = new QLabel(this);
+    QImage invisibility_icon;
+    invisibility_icon.load(":/game_objects/map_objects/invisibility.png");
+    QPixmap invisibility_pixmap = QPixmap::fromImage(invisibility_icon);
+    invisibility_label->setPixmap(invisibility_pixmap);
+    invisibility_label->setScaledContents(true);
+    invisibility_label->setFixedSize(30, 30);
+    invisibility_label->hide();
+
+    blindness_label = new QLabel(this);
+    QImage blindness_icon;
+    blindness_icon.load(":/game_objects/map_objects/blindness.png");
+    QPixmap blindness_pixmap = QPixmap::fromImage(blindness_icon);
+    blindness_label->setPixmap(blindness_pixmap);
+    blindness_label->setScaledContents(true);
+    blindness_label->setFixedSize(30, 30);
+    blindness_label->hide();
 
     score_timer = new QTimer(this);
     score_timer->start(25);
@@ -192,6 +217,7 @@ void MainWindow::update_score()
     score->setText(QString::number(game->get_score()));
     if (game->stat == Game::Win)
     {
+        Gen_Label->hide();
         win_label->show();
         score_timer->stop();
         restart->show();
@@ -199,6 +225,7 @@ void MainWindow::update_score()
     }
     else if (game->stat == Game::Lose)
     {
+        Gen_Label->hide();
         lose_label->show();
         score_timer->stop();
         restart->show();
@@ -214,41 +241,107 @@ void MainWindow::display_labels()
     if (game->Panic == true && !game->buffs.contains(panic_label))
     {
         game->buffs.append(panic_label);
+        Gen_Label->setText(powerball_messages[QRandomGenerator::global()->bounded(0,2)]);
+        Gen_Label->adjustSize();
+        Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
+        Gen_Label->show();
     }
     else if (game->Panic == false && game->buffs.contains(panic_label))
     {
         game->buffs.removeOne(panic_label);
         panic_label->hide();
+        Gen_Label->hide();
     }
 
     if (game->SpeedBoost == true && !game->buffs.contains(speedboost_label))
     {
         game->buffs.append(speedboost_label);
+        Gen_Label->setText(powerball_messages[QRandomGenerator::global()->bounded(3,5)]);
+        Gen_Label->adjustSize();
+        Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
+        Gen_Label->show();
     }
     else if (game->SpeedBoost == false && game->buffs.contains(speedboost_label))
     {
         game->buffs.removeOne(speedboost_label);
         speedboost_label->hide();
-    }
-
-    if (game->SpeedNerf == true && !game->nerfs.contains(speednerf_label))
-    {
-        game->nerfs.append(speednerf_label);
-    }
-    else if (game->SpeedNerf == false && game->nerfs.contains(speednerf_label))
-    {
-        game->nerfs.removeOne(speednerf_label);
-        speednerf_label->hide();
+        Gen_Label->hide();
     }
 
     if (game->Kaboom == true && !game->buffs.contains(kaboom_label))
     {
         game->buffs.append(kaboom_label);
+        Gen_Label->setText(powerball_messages[QRandomGenerator::global()->bounded(6,8)]);
+        Gen_Label->adjustSize();
+        Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
+        Gen_Label->show();
+
     }
     else if (game->Kaboom == false && game->buffs.contains(kaboom_label))
     {
         game->buffs.removeOne(kaboom_label);
         kaboom_label->hide();
+        Gen_Label->hide();
+    }
+
+    if (game->SpeedNerf == true && !game->nerfs.contains(speednerf_label))
+    {
+        game->nerfs.append(speednerf_label);
+        Gen_Label->setText(powerball_messages[QRandomGenerator::global()->bounded(9,11)]);
+        Gen_Label->adjustSize();
+        Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
+        Gen_Label->show();
+    }
+    else if (game->SpeedNerf == false && game->nerfs.contains(speednerf_label))
+    {
+        game->nerfs.removeOne(speednerf_label);
+        speednerf_label->hide();
+        Gen_Label->hide();
+    }
+
+    if (game->Confusion == true && !game->nerfs.contains(confusion_label))
+    {
+        game->nerfs.append(confusion_label);
+        Gen_Label->setText(powerball_messages[QRandomGenerator::global()->bounded(12,14)]);
+        Gen_Label->adjustSize();
+        Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
+        Gen_Label->show();
+    }
+    else if (game->Confusion == false && game->nerfs.contains(confusion_label))
+    {
+        game->nerfs.removeOne(confusion_label);
+        confusion_label->hide();
+        Gen_Label->hide();
+    }
+
+    if (game->Invisible == true && !game->buffs.contains(invisibility_label))
+    {
+        game->buffs.append(invisibility_label);
+        Gen_Label->setText(powerball_messages[QRandomGenerator::global()->bounded(15,17)]);
+        Gen_Label->adjustSize();
+        Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
+        Gen_Label->show();
+    }
+    else if (game->Invisible == false && game->buffs.contains(invisibility_label))
+    {
+        game->buffs.removeOne(invisibility_label);
+        invisibility_label->hide();
+        Gen_Label->hide();
+    }
+
+    if (game->Blindness == true && !game->nerfs.contains(blindness_label))
+    {
+        game->nerfs.append(blindness_label);
+        Gen_Label->setText(powerball_messages[QRandomGenerator::global()->bounded(18,20)]);
+        Gen_Label->adjustSize();
+        Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
+        Gen_Label->show();
+    }
+    else if (game->Blindness == false && game->nerfs.contains(blindness_label))
+    {
+        game->nerfs.removeOne(blindness_label);
+        blindness_label->hide();
+        Gen_Label->hide();
     }
 
     for (QLabel* buff : game->buffs) {
@@ -262,7 +355,7 @@ void MainWindow::display_labels()
     for (QLabel* nerf : game->nerfs) {
         nerf->move(width()- x, y - nerf->height());
         nerf->show();
-        x -= nerf->width() - 10; // Adjust for spacing
+        x += nerf->width() + 10; // Adjust for spacing
     }
 
     if (game->GO_Away == true)
