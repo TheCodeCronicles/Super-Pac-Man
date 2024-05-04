@@ -8,6 +8,7 @@ Pacman::Pacman() : GameObject(
     dir = Stop;
     next_dir = Stop;
     anim_index = 2;
+
     anim[Right].push_back(QPixmap(":/game_objects/pacman/a1.png"));
     anim[Right].push_back(QPixmap(":/game_objects/pacman/a2.png"));
     anim[Right].push_back(QPixmap(":/game_objects/pacman/a3.png"));

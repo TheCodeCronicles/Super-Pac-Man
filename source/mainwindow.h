@@ -10,6 +10,7 @@
 #include <QString>
 #include <QRandomGenerator>
 #include "game.h"
+#include "networkmanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,14 +26,17 @@ public:
     void initLabels();
     void keyPressEvent(QKeyEvent*) override;
     bool is_inverted = false;
+    bool isHost = false;
 
 private slots:
     void update_score();
     void start_button();
+    void join_button();
     void start_game();
     void restart_game();
     void flash_button();
     void display_labels();
+    void startNetwork();
 
 private:
     Ui::MainWindow *ui;
@@ -59,7 +63,7 @@ private:
     QTimer *initial_delay;
     QLabel *kill_mode;
     Game *game;
-    QPixmap restart_icon, restart_icon_inverted, start_icon, start_icon_inverted;
+    QPixmap restart_icon, restart_icon_inverted, start_icon, start_icon_inverted, join_icon, join_icon_inverted;
     bool CanMove = false;
     QString powerball_messages[21] = {
             "Time to Pac'em and Stack'em!",
@@ -92,6 +96,8 @@ private:
     };
 
     QPushButton *start;
+    QPushButton *join;
     QPushButton *restart;
+    NetworkManager *networkManager;
 };
 #endif // MAINWINDOW_H
