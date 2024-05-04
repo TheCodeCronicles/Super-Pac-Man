@@ -4,12 +4,15 @@
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QDebug>
 
 class NetworkManager : public QObject
 {
     Q_OBJECT
 public:
     explicit NetworkManager(QObject *parent = nullptr);
+    void setupServer();
+    void setupClient();
 
 private:
     QTcpServer *server;

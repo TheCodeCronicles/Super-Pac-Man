@@ -25,6 +25,18 @@ MainWindow::MainWindow(QWidget *parent)
     start->show();
     start->setFocusPolicy(Qt::NoFocus);
 
+    join = new QPushButton(this);
+    join_icon = QPixmap(":/game_objects/map_objects/start.png");
+    join_icon_inverted = QPixmap(":/game_objects/map_objects/start_inverted.png");
+    join->setIcon(QIcon(start_icon));
+    join->setFixedSize(join->size());
+    join->setIconSize(join->size());
+    join->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
+    join->move((width()-join->width())/2 + 200, (height() - 60));
+    connect(join, &QPushButton::clicked, this, &MainWindow::join_button);
+    join->show();
+    join->setFocusPolicy(Qt::NoFocus);
+
     restart = new QPushButton(this);
     restart_icon = QPixmap(":/game_objects/map_objects/restart.png");
     restart_icon_inverted = QPixmap(":/game_objects/map_objects/restart_inverted.png");
@@ -351,8 +363,18 @@ void MainWindow::start_button()
     Nerf_Label->show();
     score_title->show();
     score->show();
+    isHost = true;
     startNetwork();
     game->start();
+}
+
+void MainWindow::join_button()
+{
+    join->hide();
+    flash_timer->stop();
+    is_inverted = false;
+    isHost = false;
+    startNetwork();
 }
 
 void MainWindow::start_game()
@@ -395,8 +417,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::startNetwork()
 {
-    networkManager = new NetworkManager(this); // Initialize the NetworkManager
-    qDebug() << "Network started successfully!";
+        networkManager = new NetworkManager(this); // Initialize the NetworkManager
+        if (isHost) {
+            networkManager->setupServer(); // Setup server
+        } else {
+            networkManager->setupClient(); // Setup client
+        }
 }
 
 
