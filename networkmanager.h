@@ -13,6 +13,7 @@ public:
     explicit NetworkManager(QObject *parent = nullptr);
     void setupServer();
     void setupClient();
+    bool ClientConnected = false;
 
 private:
     QTcpServer *server;

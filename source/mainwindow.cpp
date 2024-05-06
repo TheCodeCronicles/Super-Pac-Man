@@ -26,9 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
     start->setFocusPolicy(Qt::NoFocus);
 
     join = new QPushButton(this);
-    join_icon = QPixmap(":/game_objects/map_objects/start.png");
-    join_icon_inverted = QPixmap(":/game_objects/map_objects/start_inverted.png");
-    join->setIcon(QIcon(start_icon));
+    join_icon = QPixmap(":/game_objects/map_objects/Join_Image.png");
+    start_icon_inverted = QPixmap(":/game_objects/map_objects/start_inverted.png");
+    join->setIcon(QIcon(join_icon));
     join->setFixedSize(join->size());
     join->setIconSize(join->size());
     join->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
@@ -36,6 +36,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(join, &QPushButton::clicked, this, &MainWindow::join_button);
     join->show();
     join->setFocusPolicy(Qt::NoFocus);
+
+    host = new QPushButton(this);
+    host_icon = QPixmap(":/game_objects/map_objects/Host_Image.png");
+    start_icon_inverted = QPixmap(":/game_objects/map_objects/start_inverted.png");
+    host->setIcon(QIcon(host_icon));
+    host->setFixedSize(host->size());
+    host->setIconSize(host->size());
+    host->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
+    host->move((width()-join->width())/2 - 200, (height() - 60));
+    connect(host, &QPushButton::clicked, this, &MainWindow::host_button);
+    host->show();
+    host->setFocusPolicy(Qt::NoFocus);
 
     restart = new QPushButton(this);
     restart_icon = QPixmap(":/game_objects/map_objects/restart.png");
@@ -456,17 +468,22 @@ void MainWindow::start_button()
     Nerf_Label->show();
     score_title->show();
     score->show();
-    isHost = true;
-    startNetwork();
+    host->hide();
+    join->hide();
     game->start();
 }
 
 void MainWindow::join_button()
 {
-    join->hide();
-    flash_timer->stop();
     is_inverted = false;
     isHost = false;
+    startNetwork();
+}
+
+void MainWindow::host_button()
+{
+    is_inverted = false;
+    isHost = true;
     startNetwork();
 }
 
@@ -490,6 +507,8 @@ void MainWindow::flash_button()
     {
         restart->setIcon(QIcon(restart_icon_inverted));
         start->setIcon((QIcon(start_icon_inverted)));
+        join->setIcon((QIcon(start_icon_inverted)));
+        host->setIcon((QIcon(start_icon_inverted)));
         is_inverted = true;
         flash_timer->setInterval(RESTART_FLASH_INTERVAL/2);
     }
@@ -497,6 +516,8 @@ void MainWindow::flash_button()
     {
         restart->setIcon(QIcon(restart_icon));
         start->setIcon((QIcon(start_icon)));
+        join->setIcon((QIcon(join_icon)));
+        host->setIcon((QIcon(host_icon)));
         is_inverted = false;
         flash_timer->setInterval(RESTART_FLASH_INTERVAL);
     }

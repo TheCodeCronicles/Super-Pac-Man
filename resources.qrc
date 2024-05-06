@@ -93,5 +93,7 @@
         <file>game_objects/map_objects/speedboost.png</file>
         <file>game_objects/map_objects/blindness.png</file>
         <file>game_objects/map_objects/invisibility.png</file>
+        <file>game_objects/map_objects/Host_Image.png</file>
+        <file>game_objects/map_objects/Join_Image.png</file>
     </qresource>
 </RCC>

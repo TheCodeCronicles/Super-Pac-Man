@@ -15,6 +15,8 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
     geo_y = y;
     stat = Playing;
 
+    networkManager = new NetworkManager(this);
+
     /* Initialize map pointers */
     map_size = map_w * map_h;
     map_width = map_w;
@@ -516,6 +518,11 @@ void Game::powerball07_flash()
 
 void Game::pacman_handler()
 {
+    if (networkManager->ClientConnected == true)
+    {
+        qDebug() << "Still connected";
+    }
+
     GeneralCounter += 1;
 
     if (GeneralCounter == 700)

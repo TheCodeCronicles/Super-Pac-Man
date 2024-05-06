@@ -27,5 +27,6 @@ void NetworkManager::setupClient()
         // Handle error, throw exception, etc.
     } else {
         qDebug() << "Connected to server!";
+        ClientConnected = true;
     }
 }

@@ -11,6 +11,7 @@
 #include <iostream>
 #include "gameobject.h"
 #include <QMediaPlayer>
+#include "networkmanager.h"
 
 using namespace std;
 
@@ -132,6 +133,7 @@ private:
     bool flash06_tick;
     bool flash07_tick;
     int GeneralCounter = 0;
+    NetworkManager *networkManager;
 
 
 };
