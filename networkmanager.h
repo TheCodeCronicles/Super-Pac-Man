@@ -14,10 +14,11 @@ public:
     void setupServer();
     void setupClient();
     bool ClientConnected = false;
-
-private:
     QTcpServer *server;
     QTcpSocket *socket;
+
+private:
+
 };
 
 #endif // NETWORKMANAGER_H

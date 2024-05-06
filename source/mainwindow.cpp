@@ -478,6 +478,12 @@ void MainWindow::join_button()
     is_inverted = false;
     isHost = false;
     startNetwork();
+
+    if (networkManager->socket->waitForConnected())
+    {
+        join->hide();
+        host->hide();
+    }
 }
 
 void MainWindow::host_button()
