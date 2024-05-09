@@ -21,6 +21,7 @@ void NetworkManager::setupClient()
 {
     // Client setup
     socket = new QTcpSocket(this);
+    //socket->localAddress();
     socket->connectToHost("127.0.0.1", 1234);
     if (!socket->waitForConnected()) {
         qDebug() << "Error: Unable to connect to server";
@@ -30,3 +31,4 @@ void NetworkManager::setupClient()
         ClientConnected = true;
     }
 }
+
