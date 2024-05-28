@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     join->setFixedSize(join->size());
     join->setIconSize(join->size());
     join->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
-    join->move((width()-join->width())/2 + 200, (height() - 60));
+    join->move((width()-join->width())/2 + 100, (height() - 60));
     connect(join, &QPushButton::clicked, this, &MainWindow::join_button);
     join->hide();
     join->setFocusPolicy(Qt::NoFocus);
@@ -44,10 +44,22 @@ MainWindow::MainWindow(QWidget *parent)
     host->setFixedSize(host->size());
     host->setIconSize(host->size());
     host->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
-    host->move((width()-join->width())/2 - 200, (height() - 60));
+    host->move((width()-join->width())/2 - 100, (height() - 60));
     connect(host, &QPushButton::clicked, this, &MainWindow::host_button);
     host->hide();
     host->setFocusPolicy(Qt::NoFocus);
+
+    ret = new QPushButton(this);
+    ret_icon = QPixmap(":/game_objects/map_objects/RETURN.png");
+    start_icon_inverted = QPixmap(":/game_objects/map_objects/start_inverted.png");
+    ret->setIcon(QIcon(ret_icon));
+    ret->setFixedSize(ret->size());
+    ret->setIconSize(ret->size());
+    ret->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
+    ret->move((width()-join->width())/2 + 500, (height() - 60));
+    connect(ret, &QPushButton::clicked, this, &MainWindow::ret_button);
+    ret->hide();
+    ret->setFocusPolicy(Qt::NoFocus);
 
     singlePlayer = new QPushButton(this);
     singleP_icon = QPixmap(":/game_objects/map_objects/SP_ICON.png");
@@ -492,6 +504,9 @@ void MainWindow::start_button()
     score->show();
     host->hide();
     join->hide();
+    singlePlayer->hide();
+    multiPlayer->hide();
+    ret->hide();
     game->start();
 }
 
@@ -515,12 +530,24 @@ void MainWindow::host_button()
     startNetwork();
 }
 
+void MainWindow::ret_button()
+{
+    is_inverted = false;
+    singlePlayer->show();
+    multiPlayer->show();
+    start->hide();
+    ret->hide();
+    join->hide();
+    host->hide();
+
+}
 void MainWindow::singleP_button()
 {
     is_inverted = false;
     singlePlayer->hide();
     multiPlayer->hide();
     start->show();
+    ret->show();
 }
 
 void MainWindow::multiP_button()
@@ -530,6 +557,7 @@ void MainWindow::multiP_button()
     multiPlayer->hide();
     host->show();
     join->show();
+    ret->show();
 }
 
 void MainWindow::start_game()
@@ -554,6 +582,7 @@ void MainWindow::flash_button()
         start->setIcon((QIcon(start_icon_inverted)));
         join->setIcon((QIcon(start_icon_inverted)));
         host->setIcon((QIcon(start_icon_inverted)));
+        ret->setIcon((QIcon(start_icon_inverted)));
         singlePlayer->setIcon((QIcon(start_icon_inverted)));
         multiPlayer->setIcon((QIcon(start_icon_inverted)));
         is_inverted = true;
@@ -565,6 +594,7 @@ void MainWindow::flash_button()
         start->setIcon((QIcon(start_icon)));
         join->setIcon((QIcon(join_icon)));
         host->setIcon((QIcon(host_icon)));
+        ret->setIcon((QIcon(ret_icon)));
         singlePlayer->setIcon((QIcon(singleP_icon)));
         multiPlayer->setIcon((QIcon(multiP_icon)));
         is_inverted = false;
