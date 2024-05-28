@@ -35,12 +35,12 @@ Game::Game(int x, int y, int map_w, int map_h, QString map_src)
     QPixmap wallpix(":/game_objects/map_objects/wall.png");
     QPixmap ballpix(":/game_objects/map_objects/dot.png");
     QPixmap powerballpix(":/game_objects/map_objects/power_ball.png");
-    QPixmap powerball02pix(":/game_objects/map_objects/power_ball_02.png");
-    QPixmap powerball03pix(":/game_objects/map_objects/power_ball_03.png");
-    QPixmap powerball04pix(":/game_objects/map_objects/power_ball_04.png");
-    QPixmap powerball05pix(":/game_objects/map_objects/power_ball_05.png");
-    QPixmap powerball06pix(":/game_objects/map_objects/power_ball_06.png");
-    QPixmap powerball07pix(":/game_objects/map_objects/power_ball_07.png");
+    QPixmap powerball02pix(":/game_objects/map_objects/power_ball.png");
+    QPixmap powerball03pix(":/game_objects/map_objects/power_ball.png");
+    QPixmap powerball04pix(":/game_objects/map_objects/power_ball.png");
+    QPixmap powerball05pix(":/game_objects/map_objects/power_ball.png");
+    QPixmap powerball06pix(":/game_objects/map_objects/power_ball.png");
+    QPixmap powerball07pix(":/game_objects/map_objects/power_ball.png");
     QPixmap gatepix(":/game_objects/map_objects/gate.png");
     QPixmap blankpix;
     QFile mapfile(map_src);

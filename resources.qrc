@@ -95,5 +95,7 @@
         <file>game_objects/map_objects/invisibility.png</file>
         <file>game_objects/map_objects/Host_Image.png</file>
         <file>game_objects/map_objects/Join_Image.png</file>
+        <file>game_objects/map_objects/SP_ICON.png</file>
+        <file>game_objects/map_objects/MP_ICON.png</file>
     </qresource>
 </RCC>

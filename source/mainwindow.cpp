@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     start->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
     start->move((width()-start->width())/2 - 4, (height() - 60));
     connect(start, &QPushButton::clicked, this, &MainWindow::start_button);
-    start->show();
+    start->hide();
     start->setFocusPolicy(Qt::NoFocus);
 
     join = new QPushButton(this);
@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     join->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
     join->move((width()-join->width())/2 + 200, (height() - 60));
     connect(join, &QPushButton::clicked, this, &MainWindow::join_button);
-    join->show();
+    join->hide();
     join->setFocusPolicy(Qt::NoFocus);
 
     host = new QPushButton(this);
@@ -46,8 +46,30 @@ MainWindow::MainWindow(QWidget *parent)
     host->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
     host->move((width()-join->width())/2 - 200, (height() - 60));
     connect(host, &QPushButton::clicked, this, &MainWindow::host_button);
-    host->show();
+    host->hide();
     host->setFocusPolicy(Qt::NoFocus);
+
+    singlePlayer = new QPushButton(this);
+    singleP_icon = QPixmap(":/game_objects/map_objects/SP_ICON.png");
+    singlePlayer->setIcon(QIcon(singleP_icon));
+    singlePlayer->setFixedSize(300,20); // Adjust these values to your desired size
+    singlePlayer->setIconSize(QSize(290, 19)); // Adjust the icon size to fit nicely within the button
+    singlePlayer->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
+    singlePlayer->move((width() - singlePlayer->width()) / 2, height() - singlePlayer->height() - 60);
+    connect(singlePlayer, &QPushButton::clicked, this, &MainWindow::singleP_button);
+    singlePlayer->show();
+    singlePlayer->setFocusPolicy(Qt::NoFocus);
+
+    multiPlayer = new QPushButton(this);
+    multiP_icon = QPixmap(":/game_objects/map_objects/MP_ICON.png");
+    multiPlayer->setIcon(QIcon(multiP_icon));
+    multiPlayer->setFixedSize(300,20); // Adjust these values to your desired size
+    multiPlayer->setIconSize(QSize(290, 19)); // Adjust the icon size to fit nicely within the button
+    multiPlayer->setStyleSheet("QPushButton { border: none; background-color: transparent; }");
+    multiPlayer->move((width() - multiPlayer->width()) / 2, height() - multiPlayer->height() - 20);
+    connect(multiPlayer, &QPushButton::clicked, this, &MainWindow::multiP_button);
+    multiPlayer->show();
+    multiPlayer->setFocusPolicy(Qt::NoFocus);
 
     restart = new QPushButton(this);
     restart_icon = QPixmap(":/game_objects/map_objects/restart.png");
@@ -493,6 +515,23 @@ void MainWindow::host_button()
     startNetwork();
 }
 
+void MainWindow::singleP_button()
+{
+    is_inverted = false;
+    singlePlayer->hide();
+    multiPlayer->hide();
+    start->show();
+}
+
+void MainWindow::multiP_button()
+{
+    is_inverted = false;
+    singlePlayer->hide();
+    multiPlayer->hide();
+    host->show();
+    join->show();
+}
+
 void MainWindow::start_game()
 {
     CanMove = true;
@@ -515,6 +554,8 @@ void MainWindow::flash_button()
         start->setIcon((QIcon(start_icon_inverted)));
         join->setIcon((QIcon(start_icon_inverted)));
         host->setIcon((QIcon(start_icon_inverted)));
+        singlePlayer->setIcon((QIcon(start_icon_inverted)));
+        multiPlayer->setIcon((QIcon(start_icon_inverted)));
         is_inverted = true;
         flash_timer->setInterval(RESTART_FLASH_INTERVAL/2);
     }
@@ -524,6 +565,8 @@ void MainWindow::flash_button()
         start->setIcon((QIcon(start_icon)));
         join->setIcon((QIcon(join_icon)));
         host->setIcon((QIcon(host_icon)));
+        singlePlayer->setIcon((QIcon(singleP_icon)));
+        multiPlayer->setIcon((QIcon(multiP_icon)));
         is_inverted = false;
         flash_timer->setInterval(RESTART_FLASH_INTERVAL);
     }
