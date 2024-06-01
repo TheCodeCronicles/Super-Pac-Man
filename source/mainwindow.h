@@ -41,6 +41,9 @@ private slots:
     void flash_button();
     void display_labels();
     void startNetwork();
+    void onConnected();
+    void onConnectionFailed();
+    void onMessageReceived(const QString &message);
 
 private:
     Ui::MainWindow *ui;
@@ -67,7 +70,7 @@ private:
     QTimer *initial_delay;
     QLabel *kill_mode;
     Game *game;
-    QPixmap restart_icon, restart_icon_inverted, start_icon, start_icon_inverted, join_icon, host_icon,ret_icon, singleP_icon, multiP_icon;
+    QPixmap restart_icon, restart_icon_inverted, start_icon, start_icon_inverted, join_icon, host_icon, ret_icon, singleP_icon, multiP_icon;
     bool CanMove = false;
     QString powerball_messages[21] = {
             "Time to Pac'em and Stack'em!",
@@ -108,4 +111,5 @@ private:
     QPushButton *restart;
     NetworkManager *networkManager;
 };
+
 #endif // MAINWINDOW_H

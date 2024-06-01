@@ -518,10 +518,6 @@ void Game::powerball07_flash()
 
 void Game::pacman_handler()
 {
-    if (networkManager->ClientConnected == true)
-    {
-        qDebug() << "Still connected";
-    }
 
     GeneralCounter += 1;
 
