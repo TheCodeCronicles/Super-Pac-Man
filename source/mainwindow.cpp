@@ -120,10 +120,7 @@ MainWindow::MainWindow(QWidget *parent)
     //game->start();            // Uncomment to bypass start button (For Development)
 
     // Initialize NetworkManager
-        networkManager = new NetworkManager(this);
-        connect(networkManager, &NetworkManager::connected, this, &MainWindow::onConnected);
-        connect(networkManager, &NetworkManager::connectionFailed, this, &MainWindow::onConnectionFailed);
-        connect(networkManager, &NetworkManager::messageReceived, this, &MainWindow::onMessageReceived);
+    networkManager = new NetworkManager(this);
 }
 
 
@@ -516,14 +513,14 @@ void MainWindow::start_button()
     game->start();
 }
 
-void MainWindow::startNetwork()
-{
-    if (isHost) {
-        networkManager->startHost();
-    } else {
-        networkManager->joinServer("127.0.0.1"); // Replace with actual server address
-    }
-}
+//void MainWindow::startNetwork()
+//{
+//    if (isHost) {
+//        networkManager->startHost();
+//    } else {
+//        networkManager->joinServer("127.0.0.1"); // Replace with actual server address
+//    }
+//}
 
 void MainWindow::onConnected()
 {
@@ -547,14 +544,22 @@ void MainWindow::onMessageReceived(const QString &message)
 void MainWindow::join_button()
 {
     isHost = false;
-    startNetwork();
+    networkManager->on_joinButton_clicked();
+    join->hide();
+    host->hide();
+    Gen_Label->setText("Listening for host broadcast...");
+    Gen_Label->show();
 }
 
 // Slot for handling host button click
 void MainWindow::host_button()
 {
     isHost = true;
-    startNetwork();
+    networkManager->on_hostButton_clicked();
+    join->hide();
+    host->hide();
+    Gen_Label->setText("Hosting a game...");
+    Gen_Label->show();
 }
 
 void MainWindow::ret_button()

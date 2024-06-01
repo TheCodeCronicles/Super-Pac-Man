@@ -40,7 +40,6 @@ private slots:
     void restart_game();
     void flash_button();
     void display_labels();
-    void startNetwork();
     void onConnected();
     void onConnectionFailed();
     void onMessageReceived(const QString &message);

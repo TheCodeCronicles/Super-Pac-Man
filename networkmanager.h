@@ -1,9 +1,11 @@
 #ifndef NETWORKMANAGER_H
 #define NETWORKMANAGER_H
 
-#include <QTcpSocket>
-#include <QTcpServer>
-#include <QObject>
+#include <QUdpSocket>
+#include <QTimer>
+#include <iostream>
+
+using namespace std;
 
 class NetworkManager : public QObject
 {
@@ -13,23 +15,23 @@ public:
     explicit NetworkManager(QObject *parent = nullptr);
     ~NetworkManager();
 
-    void startHost();
-    void joinServer(const QString &hostAddress);
+    bool hostFound = false;
+    bool playerJoined = false;
 
-    QTcpSocket *socket;
-    QTcpServer *server;
-
-signals:
-    void connected();
-    void connectionFailed();
-    void messageReceived(const QString &message);
-
-private slots:
-    void handleNewConnection();
-    void readMessage();
+public slots:
+    void on_hostButton_clicked();
+    void on_joinButton_clicked();
+    void processPendingDatagrams();
+    void broadcastPresence();
 
 private:
-    void setupSocket();
+    QUdpSocket *udpSocket;
+    QHostAddress hostAddress;
+    quint16 hostPort;
+    QTimer *broadcastTimer;
+    bool isHost;
+
+    void sendData(const QString &message, const QHostAddress &address, quint16 port);
 };
 
 #endif // NETWORKMANAGER_H
