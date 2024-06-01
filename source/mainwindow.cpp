@@ -299,6 +299,9 @@ void MainWindow::display_labels()
     int x = 50;
     int y = height() - 25;
 
+    if (networkManager->playerJoined == true)
+        start->show();
+
     if (game->Panic == true && !game->buffs.contains(panic_label))
     {
         game->buffs.append(panic_label);
@@ -421,6 +424,12 @@ void MainWindow::display_labels()
 
     if (game->GO_Away == true)
         GO_label->hide();
+
+    if (networkManager->hostFound == true)
+        Gen_Label->hide();
+
+    if (networkManager->playerJoined == true)
+        Gen_Label->hide();
 }
 
 
@@ -513,15 +522,6 @@ void MainWindow::start_button()
     game->start();
 }
 
-//void MainWindow::startNetwork()
-//{
-//    if (isHost) {
-//        networkManager->startHost();
-//    } else {
-//        networkManager->joinServer("127.0.0.1"); // Replace with actual server address
-//    }
-//}
-
 void MainWindow::onConnected()
 {
     qDebug() << "Connected!";
@@ -599,10 +599,12 @@ void MainWindow::multiP_button()
 
 void MainWindow::start_game()
 {
+    networkManager->playerJoined = false;
     CanMove = true;
     ready_label->hide();
     initial_delay->stop();
     GO_label->show();
+    networkManager->sendData("Game started", networkManager->hostAddress, networkManager->hostPort);
 }
 
 void MainWindow::restart_game()

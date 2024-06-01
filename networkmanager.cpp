@@ -24,7 +24,7 @@ NetworkManager::~NetworkManager()
 
 void NetworkManager::on_hostButton_clicked()
 {
-    udpSocket->close();
+    //udpSocket->close();
     udpSocket->bind(QHostAddress::Any, hostPort);
     isHost = true;
     hostFound = false;
@@ -34,7 +34,7 @@ void NetworkManager::on_hostButton_clicked()
 
 void NetworkManager::on_joinButton_clicked()
 {
-    udpSocket->close();
+    //udpSocket->close();
     udpSocket->bind(QHostAddress::Any, hostPort);
     isHost = false;
     hostFound = false;
@@ -68,6 +68,8 @@ void NetworkManager::processPendingDatagrams()
         } else {
             // Additional message processing if needed
         }
+
+        cout << message.toStdString() << endl;
     }
 }
 
