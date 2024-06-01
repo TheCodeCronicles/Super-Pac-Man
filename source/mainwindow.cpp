@@ -118,6 +118,12 @@ MainWindow::MainWindow(QWidget *parent)
     initLabels();
     flash_timer->start();
     //game->start();            // Uncomment to bypass start button (For Development)
+
+    // Initialize NetworkManager
+        networkManager = new NetworkManager(this);
+        connect(networkManager, &NetworkManager::connected, this, &MainWindow::onConnected);
+        connect(networkManager, &NetworkManager::connectionFailed, this, &MainWindow::onConnectionFailed);
+        connect(networkManager, &NetworkManager::messageReceived, this, &MainWindow::onMessageReceived);
 }
 
 
@@ -510,22 +516,43 @@ void MainWindow::start_button()
     game->start();
 }
 
-void MainWindow::join_button()
+void MainWindow::startNetwork()
 {
-    is_inverted = false;
-    isHost = false;
-    startNetwork();
-
-    if (networkManager->socket->waitForConnected())
-    {
-        join->hide();
-        host->hide();
+    if (isHost) {
+        networkManager->startHost();
+    } else {
+        networkManager->joinServer("127.0.0.1"); // Replace with actual server address
     }
 }
 
+void MainWindow::onConnected()
+{
+    qDebug() << "Connected!";
+    start->show();
+}
+
+void MainWindow::onConnectionFailed()
+{
+    qDebug() << "Connection Failed!";
+    // Handle connection failure (e.g., show an error message)
+}
+
+void MainWindow::onMessageReceived(const QString &message)
+{
+    qDebug() << "Message received:" << message;
+    // Handle received messages
+}
+
+// Slot for handling join button click
+void MainWindow::join_button()
+{
+    isHost = false;
+    startNetwork();
+}
+
+// Slot for handling host button click
 void MainWindow::host_button()
 {
-    is_inverted = false;
     isHost = true;
     startNetwork();
 }
@@ -608,15 +635,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::startNetwork()
-{
-        networkManager = new NetworkManager(this); // Initialize the NetworkManager
-        if (isHost) {
-            networkManager->setupServer(); // Setup server
-        } else {
-            networkManager->setupClient(); // Setup client
-        }
-}
+
 
 
 
