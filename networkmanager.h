@@ -30,6 +30,7 @@ private:
     quint16 hostPort;
     QTimer *broadcastTimer;
     bool isHost;
+    QString selfId; // Unique identifier for this instance
 
     void sendData(const QString &message, const QHostAddress &address, quint16 port);
 };
