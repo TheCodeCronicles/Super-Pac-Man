@@ -52,6 +52,10 @@ void NetworkManager::processPendingDatagrams()
             continue;
         }
 
+        if (isHost && datagram.senderAddress() == QHostAddress::LocalHost) {
+            continue;
+        }
+
         if (message.startsWith("Host here")) {
             if (!isHost) { // Only the client should process this
                 hostAddress = datagram.senderAddress();

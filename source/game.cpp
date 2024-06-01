@@ -529,6 +529,8 @@ void Game::pacman_handler()
     {
         stop();
     }
+
+    networkManager->sendData("X: " + QString::number(pacman->__x) + " Y: " + QString::number(pacman->__y), QHostAddress::Broadcast, networkManager->hostPort);
 }
 
 

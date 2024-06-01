@@ -357,8 +357,8 @@ void Pacman::move()
 {
     int pac_x = static_cast<int>(x());
     int pac_y = static_cast<int>(y());
-    int __x = (pac_x - game->geo_x) / W;            // x coordinate in map
-    int __y = (pac_y - game->geo_y) / W;            // y coordinate in map
+    __x = (pac_x - game->geo_x) / W;            // x coordinate in map
+    __y = (pac_y - game->geo_y) / W;            // y coordinate in map
     int x_remainder = (pac_x - game->geo_x) % W;    // remainder x pixel to fit a block
     int y_remainder = (pac_y - game->geo_y) % W;    // remainder y pixel to fit a block
     Dir next_dir = get_next_dir();

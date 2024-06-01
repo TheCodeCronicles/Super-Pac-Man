@@ -599,12 +599,12 @@ void MainWindow::multiP_button()
 
 void MainWindow::start_game()
 {
-    networkManager->playerJoined = false;
+    start->hide();
     CanMove = true;
     ready_label->hide();
     initial_delay->stop();
     GO_label->show();
-    networkManager->sendData("Game started", networkManager->hostAddress, networkManager->hostPort);
+    networkManager->sendData("Game started", QHostAddress::Broadcast, networkManager->hostPort);
 }
 
 void MainWindow::restart_game()

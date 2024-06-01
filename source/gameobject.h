@@ -55,6 +55,8 @@ public:
 
     friend class Game;
 
+    int __x, __y;
+
 private:
     QMediaPlayer* eatSound;
     QMediaPlayer* P3Sound;
