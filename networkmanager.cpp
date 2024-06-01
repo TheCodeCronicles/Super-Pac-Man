@@ -48,7 +48,7 @@ void NetworkManager::processPendingDatagrams()
                 hostAddress = datagram.senderAddress();
                 hostFound = true;
                 cout << "Joined Host" << endl;
-                // sendData("Player joined the game.", hostAddress, hostPort);
+                sendData("Player joined the game.", hostAddress, hostPort);
             }
         } else if (message == "Player joined the game.") {
             if (isHost) {
