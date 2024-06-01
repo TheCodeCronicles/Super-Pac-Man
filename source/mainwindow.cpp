@@ -548,8 +548,8 @@ void MainWindow::join_button()
     join->hide();
     host->hide();
     Gen_Label->setText("Listening for host broadcast...");
-    Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
     Gen_Label->adjustSize();
+    Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
     Gen_Label->show();
 }
 
@@ -561,8 +561,8 @@ void MainWindow::host_button()
     join->hide();
     host->hide();
     Gen_Label->setText("Hosting a game...");
-    Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
     Gen_Label->adjustSize();
+    Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
     Gen_Label->show();
 }
 
@@ -575,6 +575,7 @@ void MainWindow::ret_button()
     ret->hide();
     join->hide();
     host->hide();
+    Gen_Label->hide();
 
 }
 void MainWindow::singleP_button()
