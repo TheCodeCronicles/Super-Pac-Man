@@ -202,8 +202,6 @@ void MainWindow::initLabels()
 
     Gen_Label = new QLabel(this);
     Gen_Label->setStyleSheet("QLabel {font-family: Fixedsys;color: White;font-size: 32px;}");
-    Gen_Label->setScaledContents(true);
-    Gen_Label->setGeometry((width() - Gen_Label->width())/2, height() - 75, Gen_Label->width(), Gen_Label->height());
     Gen_Label->hide();
 
     panic_label = new QLabel(this);
@@ -550,6 +548,7 @@ void MainWindow::join_button()
     join->hide();
     host->hide();
     Gen_Label->setText("Listening for host broadcast...");
+    Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
     Gen_Label->adjustSize();
     Gen_Label->show();
 }
@@ -562,6 +561,7 @@ void MainWindow::host_button()
     join->hide();
     host->hide();
     Gen_Label->setText("Hosting a game...");
+    Gen_Label->move((width()-Gen_Label->width())/2, height()-75);
     Gen_Label->adjustSize();
     Gen_Label->show();
 }
