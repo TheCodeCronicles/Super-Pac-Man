@@ -45,7 +45,8 @@ void NetworkManager::processPendingDatagrams()
 {
     while (udpSocket->hasPendingDatagrams()) {
         QNetworkDatagram datagram = udpSocket->receiveDatagram();
-        QString message = QString::fromUtf8(datagram.data());
+        message = QString::fromUtf8(datagram.data());
+
 
         // Ignore messages sent by itself using selfId
         if (message.contains(selfId)) {
@@ -73,7 +74,21 @@ void NetworkManager::processPendingDatagrams()
             // Additional message processing if needed
         }
 
-        cout << message.toStdString() << endl;
+
+        // Assuming the rest of the message is JSON data
+        QByteArray jsonData = message.toUtf8(); // Convert QString to QByteArray
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
+
+        if (!jsonDoc.isNull() && jsonDoc.isObject()) {
+            QJsonObject jsonObj = jsonDoc.object();
+            int P1X = jsonObj["X"].toInt();
+            int P1Y = jsonObj["Y"].toInt();
+            cout << "Received coordinates: " << P1X << ":" << P1Y << endl;
+        } else {
+            cout << "Failed to parse JSON data" << endl;
+        }
+
+
     }
 }
 

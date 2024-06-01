@@ -530,7 +530,24 @@ void Game::pacman_handler()
         stop();
     }
 
-    networkManager->sendData("X: " + QString::number(pacman->__x) + " Y: " + QString::number(pacman->__y), QHostAddress::Broadcast, networkManager->hostPort);
+    QJsonObject pac1_stats
+    {
+        {"Flag", "P1S"},
+        {"X", pacman->__x},
+        {"Y", pacman->__y},
+    };
+
+    QJsonDocument doc(pac1_stats);
+
+    QString PacData = doc.toJson();
+
+
+      networkManager->sendData(PacData, QHostAddress::Broadcast, networkManager->hostPort);
+      if (networkManager->hostFound)
+      {
+          Pac1X = networkManager->P1X;
+          Pac1Y = networkManager->P1Y;
+      }
 }
 
 

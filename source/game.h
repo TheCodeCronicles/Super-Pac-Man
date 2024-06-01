@@ -12,6 +12,9 @@
 #include "gameobject.h"
 #include <QMediaPlayer>
 #include "networkmanager.h"
+#include <QJsonObject>
+#include <QJsonDocument>
+
 
 using namespace std;
 
@@ -58,6 +61,7 @@ public:
     bool Invisible = false;
     bool Kaboom = false;
     bool GO_Away = false;
+    int Pac1X, Pac1Y;
 
 
     GameObject ***map;                                                  // the map of pacman game

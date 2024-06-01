@@ -4,6 +4,11 @@
 #include <QUdpSocket>
 #include <QTimer>
 #include <iostream>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
+
 
 using namespace std;
 
@@ -19,6 +24,7 @@ public:
 
     bool hostFound = false;
     bool playerJoined = false;
+    int P1X, P1Y;
 
     QUdpSocket *udpSocket;
     QHostAddress hostAddress;
@@ -26,6 +32,7 @@ public:
     QTimer *broadcastTimer;
     bool isHost;
     QString selfId;
+    QString message;
 
 public slots:
     void on_hostButton_clicked();
